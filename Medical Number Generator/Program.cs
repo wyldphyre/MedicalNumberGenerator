@@ -1,20 +1,19 @@
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace MedicalNumberGenerator
 {
-    static class Program
+  static class Program
+  {
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    [STAThread]
+    static void Main()
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MedicalNumberGeneratorApplicationForm());
-        }
+      Application.EnableVisualStyles();
+      Application.SetCompatibleTextRenderingDefault(false);
+      Application.Run(new MedicalNumberGeneratorApplicationForm());
     }
+  }
 }
