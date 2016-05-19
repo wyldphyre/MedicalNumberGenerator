@@ -5,8 +5,6 @@ namespace MedicalNumberGenerator
 {
   class PatientIdentifierValidationEngine : Object
   {
-    #region private
-
     private List<string> issueList = new List<string>();
     private PatientIdentifierStyle patientIdentifierStyle;
     private string value;
@@ -17,7 +15,7 @@ namespace MedicalNumberGenerator
 
     private bool StringIsAlphanumeric(string value)
     {
-      bool result = true;
+      var result = true;
       int i = 0;
 
       while (result && (i < value.Length))
@@ -29,40 +27,26 @@ namespace MedicalNumberGenerator
 
       return result;
     }
-
     private bool StringIsNumeric(string value)
     {
-      bool result = true;
-      int i = 0;
-
-      while (result && (i < value.Length))
+      foreach (var c in value)
       {
-        result = Char.IsNumber(value[i]);
-
-        i++;
+        if (!char.IsNumber(c))
+          return false;
       }
 
-      return result;
+      return true;
     }
-
     private bool StringIsAlphabetic(string value)
     {
-      bool result = true;
-      int i = 0;
-
-      while (result && (i < value.Length))
+      foreach (var c in value)
       {
-        result = Char.IsLetter(value[i]);
-
-        i++;
+        if (!char.IsLetter(c))
+          return false;
       }
 
-      return result;
+      return true;
     }
-
-    #endregion
-
-    #region public
 
     public PatientIdentifierValidationEngine()
     {
@@ -99,29 +83,23 @@ namespace MedicalNumberGenerator
       switch (patientIdentifierStyle)
       {
         case PatientIdentifierStyle.AustralianMedicareNumber:
-          string localValue = "";
+          var localValue = "";
 
           // remove all non numeric characters from the value
-          foreach (char character in Value)
+          foreach (var character in Value)
           {
             if (Char.IsDigit(character))
-            {
               localValue += character;
-            }
           }
 
           if ((localValue.Length < 10) || (localValue.Length > 11))
-          {
             issueList.Add("Valid Medicare numbers must contain between 10 and 11 numerals.");
-          }
           else
           {
-            int firstCharacter = int.Parse(localValue[0].ToString());
+            var firstCharacter = int.Parse(localValue[0].ToString());
 
             if ((firstCharacter < 2) || (firstCharacter > 6))
-            {
               issueList.Add("The first digit of a Medicare number must be in the range [2..6].");
-            }
             else
             {
               int checkSum =
@@ -134,46 +112,36 @@ namespace MedicalNumberGenerator
                    int.Parse(localValue[6].ToString()) * 7 +
                    int.Parse(localValue[7].ToString()) * 9) % 10;
 
-              int ninthCharacter = int.Parse(localValue[8].ToString());
+              var ninthCharacter = int.Parse(localValue[8].ToString());
 
               if (ninthCharacter != checkSum)
-              {
                 issueList.Add("Invalid Australian Medicare number.");
-              }
             }
           }
 
           break;
         case PatientIdentifierStyle.AustralianDepartmentOfVeteransAffairsFileNumber:
           if (Value == "")
-          {
             issueList.Add("Veteran's Affairs numbers cannot be blank.");
-          }
           else
           {
             if (!StringIsAlphanumeric(Value))
-            {
               issueList.Add("Veteran's Affairs numbers must be alphanumeric.");
-            }
             else
             {
               if (Value.Length < 4)
-              {
                 issueList.Add("Veteran's Affairs numbers must be at least 4 characters in length.");
-              }
               else
               {
-                string uppercaseValue = Value.ToUpper();
-                char veteranState = uppercaseValue[0];
+                var uppercaseValue = Value.ToUpper();
+                var veteranState = uppercaseValue[0];
 
                 if (!Char.IsLetter(veteranState))
-                {
                   issueList.Add("Veteran's Affairs numbers must start with a letter.");
-                }
                 else
                 {
-                  int uppercaseValueIndex = 1; // start on the second character
-                  string veteranWarCode = "";
+                  var uppercaseValueIndex = 1; // start on the second character
+                  var veteranWarCode = "";
 
                   while ((uppercaseValueIndex < uppercaseValue.Length) && (Char.IsLetter(uppercaseValue[uppercaseValueIndex])))
                   {
@@ -182,41 +150,27 @@ namespace MedicalNumberGenerator
                     uppercaseValueIndex++;
                   }
 
-                  string veteranNumber = "";
+                  var veteranNumber = "";
 
                   if (uppercaseValueIndex < uppercaseValue.Length)
-                  {
                     veteranNumber = uppercaseValue.Substring(uppercaseValueIndex, uppercaseValue.Length - uppercaseValueIndex);
-                  }
-
+                  
                   if (String.IsNullOrEmpty(veteranNumber))
-                  {
                     issueList.Add("Veteran's Affairs numbers must end with a number.");
-                  }
                   else
                   {
                     // strip off the dependency suffix if it exists
                     if (StringIsAlphabetic(veteranNumber[veteranNumber.Length - 1].ToString()))
-                    {
                       veteranNumber = veteranNumber.Remove(veteranNumber.Length - 1);
-                    }
-
+             
                     if (!StringIsNumeric(veteranNumber))
-                    {
                       issueList.Add(String.Format("\"{0}\" is not a valid number.", veteranNumber));
-                    }
                     else if (!veteransAffairsLibrary.StateCodeCharacterList.Contains(veteranState))
-                    {
                       issueList.Add(String.Format("\"{0}\" is not a valid Veteran's Affairs state code.", veteranState));
-                    }
                     else if (!veteransAffairsLibrary.WarCodeNameDictionary.ContainsKey(veteranWarCode))
-                    {
                       issueList.Add(String.Format("\"{0}\" is not a valid Veteran's Affairs war code.", veteranWarCode));
-                    }
                     else if (veteranNumber.Length > 6)
-                    {
                       issueList.Add(String.Format("The numeric portion of a Veteran's Affairs number cannot exceed 6 characters.", veteranNumber));
-                    }
                   }
                 }
               }
@@ -256,25 +210,19 @@ namespace MedicalNumberGenerator
           break;
         case PatientIdentifierStyle.NewZealandNationalHealthIndexNumber:
           if (Value.Length != 7)
-          {
             IssueList.Add("Valid New Zealand National Health Index numbers must have a length of 7 characters.");
-          }
           else
           {
             for (int i = 0; i < 3; i++)
             {
               if (!Char.IsUpper(Value[i]) || (Value[i] == 'I') || (Value[i] == 'O'))
-              {
                 issueList.Add(String.Format("The character \"{0}\" in position {1} must be an uppercase letter other than \"I\" or \"O\".", Value[i], i));
-              }
             }
 
             for (int i = 3; i < Value.Length; i++)
             {
               if (!Char.IsNumber(Value[i]))
-              {
                 issueList.Add(String.Format("The character \"{0}\" in position {1} must be a number in the range 0..9", Value[i], i));
-              }
             }
 
             if (issueList.Count == 0)
@@ -299,24 +247,18 @@ namespace MedicalNumberGenerator
                    characterValue6 * 2) % 11;
 
               if (checkSumKey == 0)
-              {
                 IssueList.Add("Cannot calculate a valid check sum because the New Zealand National Health Index number is incorrect.");
-              }
               else
               {
                 checkSumKey = 11 - checkSumKey;
 
                 if (checkSumKey == 10)
-                {
                   checkSumKey = 0;
-                }
-
+          
                 char checkSumKeyAsChar = checkSumKey.ToString()[0];
 
                 if (checkSumKeyAsChar != Value[Value.Length - 1])
-                {
                   IssueList.Add(String.Format("Checksum digit \"{0}\" is incorrect.", checkSumKeyAsChar));
-                }
               }
             }
           }
@@ -350,33 +292,24 @@ namespace MedicalNumberGenerator
           throw new Exception(String.Format("Patient identifier style \"{0}\" is not handled by the validation engine.", patientIdentifierStyle.ToString()));
       }
     }
-
     public bool HasIssues()
     {
       return issueList.Count > 0;
     }
-
-    #endregion
-
-    #region properties
 
     public PatientIdentifierStyle PatientIdentifierStyle
     {
       get { return patientIdentifierStyle; }
       set { patientIdentifierStyle = value; }
     }
-
     public string Value
     {
       get { return this.value; }
       set { this.value = value; }
     }
-
     public List<string> IssueList
     {
       get { return issueList; }
     }
-
-    #endregion
   }
 }

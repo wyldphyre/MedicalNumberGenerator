@@ -69,28 +69,16 @@ namespace MedicalNumberGenerator
   {
     private string value = "";
 
-    // for internal use
-    private List<char> numericCharacterList = new List<char>();
+    private char[] numericCharacters = new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
     private List<string> warCodesList = new List<string>();
     private PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary veteransAffairsLibrary = new PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary();
 
     public VeteransAffairsPatientIdentifierValueGenerator()
     {
-      foreach (KeyValuePair<string, string> kvp in veteransAffairsLibrary.WarCodeNameDictionary)
+      foreach (var kvp in veteransAffairsLibrary.WarCodeNameDictionary)
       {
         warCodesList.Add(kvp.Key);
       }
-
-      numericCharacterList.Add('1');
-      numericCharacterList.Add('2');
-      numericCharacterList.Add('3');
-      numericCharacterList.Add('4');
-      numericCharacterList.Add('5');
-      numericCharacterList.Add('6');
-      numericCharacterList.Add('7');
-      numericCharacterList.Add('8');
-      numericCharacterList.Add('9');
-      numericCharacterList.Add('0');
     }
 
     public void Execute()
@@ -98,13 +86,13 @@ namespace MedicalNumberGenerator
       // To Do: generate a value using random data from the library, and random data for
       // the componet that doesn't come from the library
 
-      StringBuilder valueBuilder = new StringBuilder("");
+      var valueBuilder = new StringBuilder("");
       const string MaskFormat = "LAAAAAAAA";
-      int remainingCharacterCount = MaskFormat.Length;
+      var remainingCharacterCount = MaskFormat.Length;
 
       value = "";
 
-      Random rnd = new Random((int)DateTime.Now.Ticks);
+      var rnd = new Random((int)DateTime.Now.Ticks);
 
       valueBuilder.Append(veteransAffairsLibrary.StateCodeCharacterList[rnd.Next(veteransAffairsLibrary.StateCodeCharacterList.Count)]);
       valueBuilder.Append(warCodesList[rnd.Next(veteransAffairsLibrary.WarCodeNameDictionary.Count)]);
@@ -112,7 +100,7 @@ namespace MedicalNumberGenerator
 
       for (int i = 1; i <= remainingCharacterCount; i++)
       {
-        valueBuilder.Append(numericCharacterList[rnd.Next(numericCharacterList.Count)]);
+        valueBuilder.Append(numericCharacters[rnd.Next(numericCharacters.Length)]);
       }
 
       value = valueBuilder.ToString(); ;
