@@ -178,7 +178,7 @@ namespace MedicalNumberGenerator
 
                     if (validationEngine.HasIssues())
                     {
-                        ValidatePatientIdentifierTextBox.BackColor = Color.Crimson;
+                        ValidatePatientIdentifierTextBox.BackColor = Color.Red;
                     }
                     else
                     {
@@ -203,7 +203,7 @@ namespace MedicalNumberGenerator
 
                 if (validator.HasIssues())
                 {
-                    ValidateProviderNumberTextBox.BackColor = Color.Crimson;
+                    ValidateProviderNumberTextBox.BackColor = Color.Red;
                 }
                 else
                 {
