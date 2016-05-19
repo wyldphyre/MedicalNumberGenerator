@@ -1,0 +1,2 @@
+- allow the user to enter a custom mask and generate a number based on that (can't validate these, but might be useful)
+- Add an option to allow the user to copy the generated number without any of the spacing or formatting.

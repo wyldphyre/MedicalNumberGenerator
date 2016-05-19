@@ -1,0 +1,16 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\MedicalNumberGenerator.MedicalNumberGeneratorApplicationForm.resources
+obj\Debug\MedicalNumberGenerator.Properties.Resources.resources
+obj\Debug\Medical Number Generator.csproj.GenerateResource.Cache
+bin\Debug\Medical Number Generator.exe
+bin\Debug\Medical Number Generator.pdb
+obj\Debug\Medical Number Generator.exe
+obj\Debug\Medical Number Generator.pdb
+bin\Release\Medical Number Generator.exe
+bin\Release\Medical Number Generator.pdb
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\MedicalNumberGenerator.MedicalNumberGeneratorApplicationForm.resources
+obj\Release\MedicalNumberGenerator.Properties.Resources.resources
+obj\Release\Medical Number Generator.csproj.GenerateResource.Cache
+obj\Release\Medical Number Generator.exe
+obj\Release\Medical Number Generator.pdb

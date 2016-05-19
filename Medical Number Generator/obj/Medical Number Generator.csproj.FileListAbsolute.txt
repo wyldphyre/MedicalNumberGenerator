@@ -1,0 +1,8 @@
+C:\Development\wyldphyre\Products\Medical Number Generator\Medical Number Generator\obj\Debug\Medical Number Generator.exe
+C:\Development\wyldphyre\Products\Medical Number Generator\Medical Number Generator\obj\Debug\Medical Number Generator.pdb
+C:\Development\wyldphyre\Products\Medical Number Generator\Medical Number Generator\bin\Debug\Medical Number Generator.exe
+C:\Development\wyldphyre\Products\Medical Number Generator\Medical Number Generator\bin\Debug\Medical Number Generator.pdb
+C:\Development\wyldphyre\Products\Medical Number Generator\Medical Number Generator\obj\Debug\ResolveAssemblyReference.cache
+C:\Development\wyldphyre\Products\Medical Number Generator\Medical Number Generator\obj\Debug\MedicalNumberGenerator.MedicalNumberGeneratorApplicationForm.resources
+C:\Development\wyldphyre\Products\Medical Number Generator\Medical Number Generator\obj\Debug\MedicalNumberGenerator.Properties.Resources.resources
+C:\Development\wyldphyre\Products\Medical Number Generator\Medical Number Generator\obj\Debug\Medical Number Generator.csproj.GenerateResource.Cache
