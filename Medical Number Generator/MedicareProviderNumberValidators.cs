@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MedicalNumberGenerator
 {
@@ -8,44 +9,11 @@ namespace MedicalNumberGenerator
     private List<string> issueList = new List<string>();
     private string value = "";
 
-    private List<char> practiceLocationCharacterList = new List<char>();
+    private char[] practiceLocationCharacters = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'T', 'U', 'V', 'W', 'X', 'Y', };
     private Dictionary<int, char> practiceLocationCheckDigitValueDictionary = new Dictionary<int, Char>();
 
     public MedicareProviderNumberValidator()
-    {
-      practiceLocationCharacterList.Add('0');
-      practiceLocationCharacterList.Add('1');
-      practiceLocationCharacterList.Add('2');
-      practiceLocationCharacterList.Add('3');
-      practiceLocationCharacterList.Add('4');
-      practiceLocationCharacterList.Add('5');
-      practiceLocationCharacterList.Add('6');
-      practiceLocationCharacterList.Add('7');
-      practiceLocationCharacterList.Add('8');
-      practiceLocationCharacterList.Add('9');
-      practiceLocationCharacterList.Add('A');
-      practiceLocationCharacterList.Add('B');
-      practiceLocationCharacterList.Add('C');
-      practiceLocationCharacterList.Add('D');
-      practiceLocationCharacterList.Add('E');
-      practiceLocationCharacterList.Add('F');
-      practiceLocationCharacterList.Add('G');
-      practiceLocationCharacterList.Add('H');
-      practiceLocationCharacterList.Add('J');
-      practiceLocationCharacterList.Add('K');
-      practiceLocationCharacterList.Add('L');
-      practiceLocationCharacterList.Add('M');
-      practiceLocationCharacterList.Add('N');
-      practiceLocationCharacterList.Add('P');
-      practiceLocationCharacterList.Add('Q');
-      practiceLocationCharacterList.Add('R');
-      practiceLocationCharacterList.Add('T');
-      practiceLocationCharacterList.Add('U');
-      practiceLocationCharacterList.Add('V');
-      practiceLocationCharacterList.Add('W');
-      practiceLocationCharacterList.Add('X');
-      practiceLocationCharacterList.Add('Y');
-
+    {      
       practiceLocationCheckDigitValueDictionary.Add(1, 'Y');
       practiceLocationCheckDigitValueDictionary.Add(2, 'X');
       practiceLocationCheckDigitValueDictionary.Add(3, 'W');
@@ -65,59 +33,47 @@ namespace MedicalNumberGenerator
 
       issueList.Clear();
 
-      string paddedProviderNumber = "";
+      var paddedProviderNumber = "";
 
       if (value.Length < 7)
-      {
         issueList.Add("Provider number must be at least 7 characters");
-      }
       else if (value.Length > 8)
-      {
         issueList.Add("Provider number can be no more than 8 characters");
-      }
       else if (value.Length == 7)
-      {
         paddedProviderNumber = '0' + value;
-      }
       else
-      {
         paddedProviderNumber = value;
-      }
-
+      
       if (paddedProviderNumber.Length == 8)
       {
         // Check that the 7th character is an allowed practice location character
         char seventhCharacter = paddedProviderNumber[6];
 
-        if (!practiceLocationCharacterList.Contains(seventhCharacter))
-        {
+        if (!practiceLocationCharacters.Contains(seventhCharacter))
           issueList.Add(String.Format(@"Practice location character [{0}]", seventhCharacter));
-        }
+      
+        var characterValue1 = int.Parse(paddedProviderNumber[0].ToString());
+        var characterValue2 = int.Parse(paddedProviderNumber[1].ToString());
+        var characterValue3 = int.Parse(paddedProviderNumber[2].ToString());
+        var characterValue4 = int.Parse(paddedProviderNumber[3].ToString());
+        var characterValue5 = int.Parse(paddedProviderNumber[4].ToString());
+        var characterValue6 = int.Parse(paddedProviderNumber[5].ToString());
 
-        int characterValue1 = int.Parse(paddedProviderNumber[0].ToString());
-        int characterValue2 = int.Parse(paddedProviderNumber[1].ToString());
-        int characterValue3 = int.Parse(paddedProviderNumber[2].ToString());
-        int characterValue4 = int.Parse(paddedProviderNumber[3].ToString());
-        int characterValue5 = int.Parse(paddedProviderNumber[4].ToString());
-        int characterValue6 = int.Parse(paddedProviderNumber[5].ToString());
-
-        int validationCheckDigitValue =
+        var validationCheckDigitValue =
             (characterValue1 * 3 +
              characterValue2 * 5 +
              characterValue3 * 8 +
              characterValue4 * 4 +
              characterValue5 * 2 +
              characterValue6 +
-             practiceLocationCharacterList.IndexOf(seventhCharacter) * 6) % 11;
+             Array.IndexOf(practiceLocationCharacters, seventhCharacter) * 6) % 11;
 
         char validationCheckDigit;
 
         practiceLocationCheckDigitValueDictionary.TryGetValue(validationCheckDigitValue + 1, out validationCheckDigit);
 
         if (validationCheckDigit != paddedProviderNumber[7])
-        {
           issueList.Add("Check digit character is not valid.");
-        }
       }
     }
 

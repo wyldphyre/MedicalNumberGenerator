@@ -94,7 +94,7 @@ namespace MedicalNumberGenerator
 
       var rnd = new Random((int)DateTime.Now.Ticks);
 
-      valueBuilder.Append(veteransAffairsLibrary.StateCodeCharacterList[rnd.Next(veteransAffairsLibrary.StateCodeCharacterList.Count)]);
+      valueBuilder.Append(veteransAffairsLibrary.StateCodeCharacters[rnd.Next(veteransAffairsLibrary.StateCodeCharacters.Length)]);
       valueBuilder.Append(warCodesList[rnd.Next(veteransAffairsLibrary.WarCodeNameDictionary.Count)]);
       remainingCharacterCount -= valueBuilder.Length;
 

@@ -19,9 +19,7 @@ namespace MedicalNumberGenerator
       if (definitionA == null)
       {
         if (definitionB == null)
-        {
           return 0;
-        }
         else
         {
           // If x is null and y is not null, y
@@ -47,8 +45,6 @@ namespace MedicalNumberGenerator
 
   public class PatientIdentifierStyleHelper : Object
   {
-    #region private
-
     // Provided by user of the class
     private List<PatientIdentifierDefinition> patientIdentifierDefinitionList = null;
 
@@ -56,10 +52,6 @@ namespace MedicalNumberGenerator
     private Dictionary<PatientIdentifierStyle, string> nameByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
     private Dictionary<PatientIdentifierStyle, string> maskFormatByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
     private Dictionary<string, PatientIdentifierStyle> styleByNameDictionary = new Dictionary<string, PatientIdentifierStyle>();
-
-    #endregion
-
-    #region public
 
     public void Prepare()
     {
@@ -106,24 +98,16 @@ namespace MedicalNumberGenerator
 
     public PatientIdentifierDefinition GetPatientIdentifierDefinitionByStyle(PatientIdentifierStyle style)
     {
-      PatientIdentifierDefinition definition = new PatientIdentifierDefinition();
+      var definition = new PatientIdentifierDefinition();
       definition.Style = style;
 
-      int index = PatientIdentifierDefinitionList.BinarySearch(definition, new PatientIdentifierDefinitionStyleComparer());
+      var index = PatientIdentifierDefinitionList.BinarySearch(definition, new PatientIdentifierDefinitionStyleComparer());
 
       if (index >= 0)
-      {
         return PatientIdentifierDefinitionList[index];
-      }
-      else
-      {
-        return null;
-      }
+      
+      return null;
     }
-
-    #endregion
-
-    #region public properties
 
     public List<PatientIdentifierDefinition> PatientIdentifierDefinitionList
     {
@@ -140,13 +124,11 @@ namespace MedicalNumberGenerator
         patientIdentifierDefinitionList = value;
       }
     }
-
-    #endregion
   }
 
   public class PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary
   {
-    private List<char> stateCodeCharacterList = new List<char>();
+    private char[] stateCodeCharacterList = new[] { 'N', 'V', 'Q', 'S', 'W', 'T' };
     private Dictionary<string, string> warCodeNameDictionary = new Dictionary<string, string>();
 
     public PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary()
@@ -207,16 +189,9 @@ namespace MedicalNumberGenerator
       warCodeNameDictionary.Add("SL", "Sierra Leone");
       warCodeNameDictionary.Add("SUD", "Sudan");
       warCodeNameDictionary.Add("TZA", "Tanzania");
-
-      stateCodeCharacterList.Add('N');
-      stateCodeCharacterList.Add('V');
-      stateCodeCharacterList.Add('Q');
-      stateCodeCharacterList.Add('S');
-      stateCodeCharacterList.Add('W');
-      stateCodeCharacterList.Add('T');
     }
 
-    public List<char> StateCodeCharacterList
+    public char[] StateCodeCharacters
     {
       get { return stateCodeCharacterList; }
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MedicalNumberGenerator
 {
@@ -165,7 +166,7 @@ namespace MedicalNumberGenerator
              
                     if (!StringIsNumeric(veteranNumber))
                       issueList.Add(String.Format("\"{0}\" is not a valid number.", veteranNumber));
-                    else if (!veteransAffairsLibrary.StateCodeCharacterList.Contains(veteranState))
+                    else if (!veteransAffairsLibrary.StateCodeCharacters.Contains(veteranState))
                       issueList.Add(String.Format("\"{0}\" is not a valid Veteran's Affairs state code.", veteranState));
                     else if (!veteransAffairsLibrary.WarCodeNameDictionary.ContainsKey(veteranWarCode))
                       issueList.Add(String.Format("\"{0}\" is not a valid Veteran's Affairs war code.", veteranWarCode));

@@ -6,18 +6,9 @@ namespace MedicalNumberGenerator
 {
   class MaskedTextRandomValueGenerator : Object
   {
-    #region private
-
-    private string maskFormat;
-    private string text;
-
     private List<char> alphanumericCharacterList = new List<char>();
     private List<char> alphabeticCharacterList = new List<char>();
     private List<char> numericCharacterList = new List<char>();
-
-    #endregion
-
-    #region public
 
     public MaskedTextRandomValueGenerator()
     {
@@ -60,14 +51,10 @@ namespace MedicalNumberGenerator
       numericCharacterList.Add('0');
 
       foreach (char character in alphabeticCharacterList)
-      {
         alphanumericCharacterList.Add(character);
-      }
 
       foreach (char character in numericCharacterList)
-      {
         alphanumericCharacterList.Add(character);
-      }
     }
 
     public void Execute()
@@ -75,9 +62,9 @@ namespace MedicalNumberGenerator
       // To Do: run a validation to ensure that the mask format only contains characters that
       // the generator knows how to deal with.
 
-      StringBuilder textBuilder = new StringBuilder("", maskFormat.Length);
+      var textBuilder = new StringBuilder("", MaskFormat.Length);
 
-      text = "";
+      Text = "";
 
       Random rnd = new Random((int)DateTime.Now.Ticks);
 
@@ -100,24 +87,11 @@ namespace MedicalNumberGenerator
         }
       }
 
-      text = textBuilder.ToString();
+      Text = textBuilder.ToString();
     }
 
-    #endregion
+    public string MaskFormat { get; set; }
 
-    #region properties
-
-    public string MaskFormat
-    {
-      get { return maskFormat; }
-      set { maskFormat = value; }
-    }
-
-    public string Text
-    {
-      get { return text; }
-    }
-
-    #endregion
+    public string Text { get; private set; }
   }
 }
