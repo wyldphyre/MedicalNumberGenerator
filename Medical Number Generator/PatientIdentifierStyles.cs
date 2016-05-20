@@ -43,7 +43,7 @@ namespace MedicalNumberGenerator
     }
   }
 
-  public class PatientIdentifierStyleHelper : Object
+  public class PatientIdentifierStyleHelper
   {
     // Provided by user of the class
     private List<PatientIdentifierDefinition> patientIdentifierDefinitionList = null;
@@ -128,7 +128,7 @@ namespace MedicalNumberGenerator
 
   public class PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary
   {
-    private char[] stateCodeCharacterList = new[] { 'N', 'V', 'Q', 'S', 'W', 'T' };
+    private char[] stateCodeCharacters = new[] { 'N', 'V', 'Q', 'S', 'W', 'T' };
     private Dictionary<string, string> warCodeNameDictionary = new Dictionary<string, string>();
 
     public PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary()
@@ -193,7 +193,7 @@ namespace MedicalNumberGenerator
 
     public char[] StateCodeCharacters
     {
-      get { return stateCodeCharacterList; }
+      get { return stateCodeCharacters; }
     }
 
     public Dictionary<string, string> WarCodeNameDictionary

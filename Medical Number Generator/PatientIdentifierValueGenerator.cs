@@ -6,14 +6,7 @@ namespace MedicalNumberGenerator
 {
   class PatientIdentifierValueGenerator
   {
-    #region private
-
     private PatientIdentifierDefinition definition;
-    private string value = "";
-
-    #endregion
-
-    #region public
 
     public void Execute()
     {
@@ -23,7 +16,7 @@ namespace MedicalNumberGenerator
           VeteransAffairsPatientIdentifierValueGenerator veteransAffairsGenerator = new VeteransAffairsPatientIdentifierValueGenerator();
           veteransAffairsGenerator.Execute();
 
-          value = veteransAffairsGenerator.Value;
+          Value = veteransAffairsGenerator.Value;
 
           break;
         default:
@@ -32,20 +25,13 @@ namespace MedicalNumberGenerator
           maskedTextRandomValueGenerator.MaskFormat = Definition.MaskFormat;
           maskedTextRandomValueGenerator.Execute();
 
-          value = maskedTextRandomValueGenerator.Text;
+          Value = maskedTextRandomValueGenerator.Text;
 
           break;
       }
     }
 
-    #endregion
-
-    #region properties
-
-    public string Value
-    {
-      get { return value; }
-    }
+    public string Value { get; private set; }
 
     public PatientIdentifierDefinition Definition
     {
@@ -61,8 +47,6 @@ namespace MedicalNumberGenerator
         definition = value;
       }
     }
-
-    #endregion
   }
 
   public class VeteransAffairsPatientIdentifierValueGenerator

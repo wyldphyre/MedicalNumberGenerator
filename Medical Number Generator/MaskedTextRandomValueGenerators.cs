@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MedicalNumberGenerator
 {
-  class MaskedTextRandomValueGenerator : Object
+  class MaskedTextRandomValueGenerator
   {
     private List<char> alphanumericCharacterList = new List<char>();
     private List<char> alphabeticCharacterList = new List<char>();

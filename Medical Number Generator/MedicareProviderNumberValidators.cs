@@ -7,8 +7,6 @@ namespace MedicalNumberGenerator
   class MedicareProviderNumberValidator
   {
     private List<string> issueList = new List<string>();
-    private string value = "";
-
     private char[] practiceLocationCharacters = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'T', 'U', 'V', 'W', 'X', 'Y', };
     private Dictionary<int, char> practiceLocationCheckDigitValueDictionary = new Dictionary<int, Char>();
 
@@ -29,20 +27,20 @@ namespace MedicalNumberGenerator
 
     public void Execute()
     {
-      System.Diagnostics.Debug.Assert(value != "", "You must provide a Value to validate");
+      System.Diagnostics.Debug.Assert(Value != "", "You must provide a Value to validate");
 
       issueList.Clear();
 
       var paddedProviderNumber = "";
 
-      if (value.Length < 7)
+      if (Value.Length < 7)
         issueList.Add("Provider number must be at least 7 characters");
-      else if (value.Length > 8)
+      else if (Value.Length > 8)
         issueList.Add("Provider number can be no more than 8 characters");
-      else if (value.Length == 7)
-        paddedProviderNumber = '0' + value;
+      else if (Value.Length == 7)
+        paddedProviderNumber = '0' + Value;
       else
-        paddedProviderNumber = value;
+        paddedProviderNumber = Value;
       
       if (paddedProviderNumber.Length == 8)
       {
@@ -77,15 +75,10 @@ namespace MedicalNumberGenerator
       }
     }
 
+    public string Value { get; set; }
     public bool HasIssues()
     {
       return issueList.Count > 0;
-    }
-
-    public string Value
-    {
-      get { return value; }
-      set { this.value = value; }
     }
   }
 }
