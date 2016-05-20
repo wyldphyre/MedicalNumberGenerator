@@ -14,7 +14,7 @@ namespace MedicalNumberGenerator
     {
       InitializeComponent();
 
-      PatientIdentifierDefinitionListBuilder listBuilder = new PatientIdentifierDefinitionListBuilder();
+      var listBuilder = new PatientIdentifierDefinitionListBuilder();
 
       listBuilder.DefinitionList = patientIdentifierDefinitionList;
       listBuilder.Build();
@@ -29,9 +29,7 @@ namespace MedicalNumberGenerator
       ProviderNumberCopyHintLabel.Visible = false;
 
       foreach (PatientIdentifierDefinition definition in patientIdentifierDefinitionList)
-      {
         PatientIdentifierStyleComboBox.Items.Add(definition.Name);
-      }
 
       PatientIdentifierStyleComboBox.SelectedIndex = 0;
     }
@@ -39,8 +37,8 @@ namespace MedicalNumberGenerator
     private void PatientIdentifierTypeGenerateButton_Click(object sender, EventArgs e)
     {
       //MaskedTextRandomValueGenerator generator = new MaskedTextRandomValueGenerator();
-      PatientIdentifierStyle style = helper.GetPatientIdentifierStyleByName(PatientIdentifierStyleComboBox.Text);
-      PatientIdentifierDefinition definition = helper.GetPatientIdentifierDefinitionByStyle(style);
+      var style = helper.GetPatientIdentifierStyleByName(PatientIdentifierStyleComboBox.Text);
+      var definition = helper.GetPatientIdentifierDefinitionByStyle(style);
 
       if (definition == null)
       {
@@ -48,16 +46,16 @@ namespace MedicalNumberGenerator
       }
       else
       {
-        PatientIdentifierValueGenerator valueGenerator = new PatientIdentifierValueGenerator();
-        PatientIdentifierValidationEngine validationEngine = new PatientIdentifierValidationEngine();
+        var valueGenerator = new PatientIdentifierValueGenerator();
+        var validationEngine = new PatientIdentifierValidationEngine();
         validationEngine.PatientIdentifierStyle = definition.Style;
-        Cursor oldCursor = this.Cursor;
+        var oldCursor = this.Cursor;
         string generatedIdentifier = "";
 
         this.Cursor = Cursors.WaitCursor;
         try
         {
-          bool valid = false;
+          var valid = false;
           do
           {
             valueGenerator.Definition = definition;
@@ -69,18 +67,14 @@ namespace MedicalNumberGenerator
             valid = !validationEngine.HasIssues();
 
             if (GenerateInvalidCheckBox.Checked)
-            {
               valid = !valid;
-            }
           }
           while (!valid);
 
           generatedIdentifier = valueGenerator.Value;
 
           if (!GenerateFormattedCheckBox.Checked)
-          {
             generatedIdentifier = RemoveFormatting(generatedIdentifier);
-          }
 
           GeneratedPatientIdentifierLinkLabel.Text = generatedIdentifier;
         }
@@ -93,17 +87,17 @@ namespace MedicalNumberGenerator
 
     private void MedicareProviderNumberGenerateButton_Click(object sender, EventArgs e)
     {
-      MaskedTextRandomValueGenerator maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
-      MedicareProviderNumberValidator validator = new MedicareProviderNumberValidator();
-      Cursor oldCursor = this.Cursor;
-      string generatedProviderNumber = "";
+      var maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
+      var validator = new MedicareProviderNumberValidator();
+      var oldCursor = this.Cursor;
+      var generatedProviderNumber = "";
 
       maskedTextRandomValueGenerator.MaskFormat = "999999AL";
 
       this.Cursor = Cursors.WaitCursor;
       try
       {
-        bool valid = false;
+        var valid = false;
         do
         {
           maskedTextRandomValueGenerator.Execute();
@@ -114,18 +108,14 @@ namespace MedicalNumberGenerator
           valid = !validator.HasIssues();
 
           if (GenerateInvalidCheckBox.Checked)
-          {
             valid = !valid;
-          }
         }
         while (!valid);
 
         generatedProviderNumber = maskedTextRandomValueGenerator.Text;
 
         if (!GenerateFormattedCheckBox.Checked)
-        {
           generatedProviderNumber = RemoveFormatting(generatedProviderNumber);
-        }
 
         GeneratedMedicareProviderNumberLinkLabel.Text = generatedProviderNumber;
       }
@@ -153,13 +143,11 @@ namespace MedicalNumberGenerator
     private void ValidatePatientIdentifierTextBox_TextChanged(object sender, EventArgs e)
     {
       if (ValidatePatientIdentifierTextBox.Text == string.Empty)
-      {
         ValidatePatientIdentifierTextBox.BackColor = Color.White;
-      }
       else
       {
-        PatientIdentifierStyle style = helper.GetPatientIdentifierStyleByName(PatientIdentifierStyleComboBox.Text);
-        PatientIdentifierDefinition definition = helper.GetPatientIdentifierDefinitionByStyle(style);
+        var style = helper.GetPatientIdentifierStyleByName(PatientIdentifierStyleComboBox.Text);
+        var definition = helper.GetPatientIdentifierDefinitionByStyle(style);
 
         if (definition == null)
         {
@@ -167,20 +155,16 @@ namespace MedicalNumberGenerator
         }
         else
         {
-          PatientIdentifierValidationEngine validationEngine = new PatientIdentifierValidationEngine();
+          var validationEngine = new PatientIdentifierValidationEngine();
           validationEngine.PatientIdentifierStyle = definition.Style;
 
           validationEngine.Value = ValidatePatientIdentifierTextBox.Text;
           validationEngine.Execute();
 
           if (validationEngine.HasIssues())
-          {
             ValidatePatientIdentifierTextBox.BackColor = Color.Red;
-          }
           else
-          {
             ValidatePatientIdentifierTextBox.BackColor = Color.LightGreen;
-          }
         }
       }
     }
@@ -188,24 +172,18 @@ namespace MedicalNumberGenerator
     private void ValidateProviderNumberTextBox_TextChanged(object sender, EventArgs e)
     {
       if (ValidateProviderNumberTextBox.Text == String.Empty)
-      {
         ValidateProviderNumberTextBox.BackColor = Color.White;
-      }
       else
       {
-        MedicareProviderNumberValidator validator = new MedicareProviderNumberValidator();
+        var validator = new MedicareProviderNumberValidator();
 
         validator.Value = ValidateProviderNumberTextBox.Text;
         validator.Execute();
 
         if (validator.HasIssues())
-        {
           ValidateProviderNumberTextBox.BackColor = Color.Red;
-        }
         else
-        {
           ValidateProviderNumberTextBox.BackColor = Color.LightGreen;
-        }
       }
     }
 
