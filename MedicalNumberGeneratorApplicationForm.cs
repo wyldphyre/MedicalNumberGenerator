@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,19 +7,15 @@ namespace MedicalNumberGenerator
   public partial class MedicalNumberGeneratorApplicationForm : Form
   {
     private PatientIdentifierStyleHelper helper = new PatientIdentifierStyleHelper();
-    private List<PatientIdentifierDefinition> patientIdentifierDefinitionList = new List<PatientIdentifierDefinition>();
+    private PatientIdentifierDefinition[] patientIdentifierDefinitionList;
 
     public MedicalNumberGeneratorApplicationForm()
     {
       InitializeComponent();
 
-      var listBuilder = new PatientIdentifierDefinitionListBuilder();
-
-      listBuilder.DefinitionList = patientIdentifierDefinitionList;
-      listBuilder.Build();
-
-      helper.PatientIdentifierDefinitionList = patientIdentifierDefinitionList;
-      helper.Prepare();
+      patientIdentifierDefinitionList = PatientIdentifierDefinitionListBuilder.Build();
+      
+      helper.Prepare(patientIdentifierDefinitionList);
     }
 
     private void MedicalNumberGeneratorApplicationForm_Load(object sender, EventArgs e)
@@ -28,7 +23,7 @@ namespace MedicalNumberGenerator
       PatientIdentifierCopyHintLabel.Visible = false;
       ProviderNumberCopyHintLabel.Visible = false;
 
-      foreach (PatientIdentifierDefinition definition in patientIdentifierDefinitionList)
+      foreach (var definition in patientIdentifierDefinitionList)
         PatientIdentifierStyleComboBox.Items.Add(definition.Name);
 
       PatientIdentifierStyleComboBox.SelectedIndex = 0;

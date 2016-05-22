@@ -10,12 +10,12 @@ namespace MedicalNumberGenerator
     public PatientIdentifierStyle Style { get; set; }
   }
 
-  public class PatientIdentifierDefinitionListBuilder
+  public static class PatientIdentifierDefinitionListBuilder
   {
-    private List<PatientIdentifierDefinition> definitionList = null;
-
-    public void Build()
+    public static PatientIdentifierDefinition[] Build()
     {
+      var DefinitionList = new List<PatientIdentifierDefinition>();
+
       DefinitionList.Add(new PatientIdentifierDefinition
       {
         Name = "Australian Medicare Number",
@@ -42,22 +42,8 @@ namespace MedicalNumberGenerator
         MaskFormat = "LLL9999",
         Style = PatientIdentifierStyle.NewZealandNationalHealthIndexNumber
       });
-    }
 
-    public List<PatientIdentifierDefinition> DefinitionList
-    {
-      get
-      {
-        Debug.Assert(definitionList != null, "definitionList is null. Must be assigned before calling Build.");
-
-        return definitionList;
-      }
-      set
-      {
-        Debug.Assert(value != null, "Cannot assign a null value to DefinitionList.");
-
-        definitionList = value;
-      }
+      return DefinitionList.ToArray();
     }
   }
 }
