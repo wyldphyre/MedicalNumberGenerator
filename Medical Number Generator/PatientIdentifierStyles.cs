@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MedicalNumberGenerator
 {
@@ -12,49 +13,19 @@ namespace MedicalNumberGenerator
     NewZealandNationalHealthIndexNumber
   }
 
-  public class PatientIdentifierDefinitionStyleComparer : IComparer<PatientIdentifierDefinition>
-  {
-    public int Compare(PatientIdentifierDefinition definitionA, PatientIdentifierDefinition definitionB)
-    {
-      if (definitionA == null)
-      {
-        if (definitionB == null)
-          return 0;
-        else
-        {
-          // If x is null and y is not null, y
-          // is greater.
-          return -1;
-        }
-      }
-      else
-      {
-        if (definitionB == null)
-        {
-          // definitionA is greater
-          return 1;
-        }
-        else
-        {
-          // neither object is null, so compare their styles
-          return definitionA.Style.CompareTo(definitionB.Style);
-        }
-      }
-    }
-  }
-
   public class PatientIdentifierStyleHelper
   {
-    // Provided by user of the class
-    private List<PatientIdentifierDefinition> patientIdentifierDefinitionList = null;
+    private PatientIdentifierDefinition[] patientIdentifierDefinitionList;
 
     // for internal use
     private Dictionary<PatientIdentifierStyle, string> nameByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
     private Dictionary<PatientIdentifierStyle, string> maskFormatByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
     private Dictionary<string, PatientIdentifierStyle> styleByNameDictionary = new Dictionary<string, PatientIdentifierStyle>();
 
-    public void Prepare()
+    public void Prepare(PatientIdentifierDefinition[] PatientIdentifierDefinitionList)
     {
+      patientIdentifierDefinitionList = PatientIdentifierDefinitionList;
+
       foreach (PatientIdentifierDefinition definition in PatientIdentifierDefinitionList)
       {
         nameByStyleDictionary.Add(definition.Style, definition.Name);
@@ -98,30 +69,16 @@ namespace MedicalNumberGenerator
 
     public PatientIdentifierDefinition GetPatientIdentifierDefinitionByStyle(PatientIdentifierStyle style)
     {
-      var definition = new PatientIdentifierDefinition();
-      definition.Style = style;
-
-      var index = PatientIdentifierDefinitionList.BinarySearch(definition, new PatientIdentifierDefinitionStyleComparer());
-
-      if (index >= 0)
-        return PatientIdentifierDefinitionList[index];
-      
-      return null;
+      return PatientIdentifierDefinitionList.FirstOrDefault(Definition => Definition.Style == style);
     }
 
-    public List<PatientIdentifierDefinition> PatientIdentifierDefinitionList
+    public PatientIdentifierDefinition[] PatientIdentifierDefinitionList
     {
       get
       {
         Debug.Assert(patientIdentifierDefinitionList != null, "definitionList is null. Must be assigned before calling Build.");
 
         return patientIdentifierDefinitionList;
-      }
-      set
-      {
-        Debug.Assert(value != null, "Cannot assign a null value to DefinitionList.");
-
-        patientIdentifierDefinitionList = value;
       }
     }
   }
