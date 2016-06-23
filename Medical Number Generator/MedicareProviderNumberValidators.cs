@@ -6,12 +6,13 @@ namespace MedicalNumberGenerator
 {
   class MedicareProviderNumberValidator
   {
-    private List<string> issueList = new List<string>();
-    private char[] practiceLocationCharacters = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'T', 'U', 'V', 'W', 'X', 'Y', };
-    private Dictionary<int, char> practiceLocationCheckDigitValueDictionary = new Dictionary<int, Char>();
+    private readonly char[] practiceLocationCharacters = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'T', 'U', 'V', 'W', 'X', 'Y', };
+    private readonly Dictionary<int, char> practiceLocationCheckDigitValueDictionary = new Dictionary<int, Char>();
 
     public MedicareProviderNumberValidator()
-    {      
+    {
+      Issues = new List<string>();
+
       practiceLocationCheckDigitValueDictionary.Add(1, 'Y');
       practiceLocationCheckDigitValueDictionary.Add(2, 'X');
       practiceLocationCheckDigitValueDictionary.Add(3, 'W');
@@ -25,18 +26,19 @@ namespace MedicalNumberGenerator
       practiceLocationCheckDigitValueDictionary.Add(11, 'A');
     }
 
-    public void Execute()
+    public List<string> Issues { get; private set; }
+    public bool Validate(string Value)
     {
-      System.Diagnostics.Debug.Assert(Value != "", "You must provide a Value to validate");
+      System.Diagnostics.Debug.Assert(Value != "" && Value != null, "You must provide a Value to validate");
 
-      issueList.Clear();
+      Issues.Clear();
 
       var paddedProviderNumber = "";
 
       if (Value.Length < 7)
-        issueList.Add("Provider number must be at least 7 characters");
+        Issues.Add("Provider number must be at least 7 characters");
       else if (Value.Length > 8)
-        issueList.Add("Provider number can be no more than 8 characters");
+        Issues.Add("Provider number can be no more than 8 characters");
       else if (Value.Length == 7)
         paddedProviderNumber = '0' + Value;
       else
@@ -48,7 +50,7 @@ namespace MedicalNumberGenerator
         char seventhCharacter = paddedProviderNumber[6];
 
         if (!practiceLocationCharacters.Contains(seventhCharacter))
-          issueList.Add(String.Format(@"Practice location character [{0}]", seventhCharacter));
+          Issues.Add(String.Format(@"Practice location character [{0}]", seventhCharacter));
       
         var characterValue1 = int.Parse(paddedProviderNumber[0].ToString());
         var characterValue2 = int.Parse(paddedProviderNumber[1].ToString());
@@ -71,14 +73,10 @@ namespace MedicalNumberGenerator
         practiceLocationCheckDigitValueDictionary.TryGetValue(validationCheckDigitValue + 1, out validationCheckDigit);
 
         if (validationCheckDigit != paddedProviderNumber[7])
-          issueList.Add("Check digit character is not valid.");
+          Issues.Add("Check digit character is not valid.");
       }
-    }
 
-    public string Value { get; set; }
-    public bool HasIssues()
-    {
-      return issueList.Count > 0;
+      return Issues.Count == 0;
     }
   }
 }

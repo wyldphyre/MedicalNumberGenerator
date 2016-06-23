@@ -77,7 +77,7 @@ namespace MedicalNumberGenerator
       newZealandNationalHealthIndexAlphabetIntegerDictionary.Add('Z', 24);
     }
 
-    public void Execute()
+    public bool Validate(string Value)
     {
       issueList.Clear();
 
@@ -292,6 +292,8 @@ namespace MedicalNumberGenerator
         default:
           throw new Exception(String.Format("Patient identifier style \"{0}\" is not handled by the validation engine.", patientIdentifierStyle.ToString()));
       }
+
+      return !issueList.Any();
     }
     public bool HasIssues()
     {
@@ -302,11 +304,6 @@ namespace MedicalNumberGenerator
     {
       get { return patientIdentifierStyle; }
       set { patientIdentifierStyle = value; }
-    }
-    public string Value
-    {
-      get { return this.value; }
-      set { this.value = value; }
     }
     public List<string> IssueList
     {
