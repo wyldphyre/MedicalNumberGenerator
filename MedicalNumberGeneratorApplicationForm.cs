@@ -6,7 +6,7 @@ namespace MedicalNumberGenerator
 {
   public partial class MedicalNumberGeneratorApplicationForm : Form
   {
-    private PatientIdentifierStyleHelper helper = new PatientIdentifierStyleHelper();
+    private PatientIdentifierStyleHelper helper;
     private PatientIdentifierDefinition[] patientIdentifierDefinitionList;
     private readonly MedicareProviderNumberValidator validator;
 
@@ -16,8 +16,7 @@ namespace MedicalNumberGenerator
 
       patientIdentifierDefinitionList = PatientIdentifierDefinitionListBuilder.Build();
       validator = new MedicareProviderNumberValidator();
-
-      helper.Prepare(patientIdentifierDefinitionList);
+      helper = new PatientIdentifierStyleHelper(patientIdentifierDefinitionList);
     }
 
     private void MedicalNumberGeneratorApplicationForm_Load(object sender, EventArgs e)
@@ -33,7 +32,6 @@ namespace MedicalNumberGenerator
 
     private void PatientIdentifierTypeGenerateButton_Click(object sender, EventArgs e)
     {
-      //MaskedTextRandomValueGenerator generator = new MaskedTextRandomValueGenerator();
       var style = helper.GetPatientIdentifierStyleByName(PatientIdentifierStyleComboBox.Text);
       var definition = helper.GetPatientIdentifierDefinitionByStyle(style);
 
@@ -53,19 +51,19 @@ namespace MedicalNumberGenerator
         try
         {
           var valid = false;
+          var value = "";
           do
           {
-            valueGenerator.Definition = definition;
-            valueGenerator.Execute();
+            value = valueGenerator.Generate(definition);
             
-            valid = validationEngine.Validate(valueGenerator.Value);
+            valid = validationEngine.Validate(value);
 
             if (GenerateInvalidCheckBox.Checked)
               valid = !valid;
           }
           while (!valid);
 
-          generatedIdentifier = valueGenerator.Value;
+          generatedIdentifier = value;
 
           if (!GenerateFormattedCheckBox.Checked)
             generatedIdentifier = RemoveFormatting(generatedIdentifier);
@@ -93,16 +91,14 @@ namespace MedicalNumberGenerator
         var valid = false;
         do
         {
-          maskedTextRandomValueGenerator.Execute();
+          generatedProviderNumber  = maskedTextRandomValueGenerator.Generate();
 
-          valid = validator.Validate(maskedTextRandomValueGenerator.Text);
+          valid = validator.Validate(generatedProviderNumber);
 
           if (GenerateInvalidCheckBox.Checked)
             valid = !valid;
         }
         while (!valid);
-
-        generatedProviderNumber = maskedTextRandomValueGenerator.Text;
 
         if (!GenerateFormattedCheckBox.Checked)
           generatedProviderNumber = RemoveFormatting(generatedProviderNumber);

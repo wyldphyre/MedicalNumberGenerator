@@ -15,14 +15,12 @@ namespace MedicalNumberGenerator
       alphanumericCharacters = alphabeticCharacters.Union(numericCharacters).ToArray();
     }
 
-    public void Execute()
+    public string Generate()
     {
       // To Do: run a validation to ensure that the mask format only contains characters that
       // the generator knows how to deal with.
 
       var textBuilder = new StringBuilder("", MaskFormat.Length);
-
-      Text = "";
 
       Random rnd = new Random((int)DateTime.Now.Ticks);
 
@@ -45,11 +43,9 @@ namespace MedicalNumberGenerator
         }
       }
 
-      Text = textBuilder.ToString();
+      return textBuilder.ToString();
     }
 
     public string MaskFormat { get; set; }
-
-    public string Text { get; private set; }
   }
 }

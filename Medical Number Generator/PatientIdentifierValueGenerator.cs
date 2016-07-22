@@ -6,53 +6,25 @@ namespace MedicalNumberGenerator
 {
   class PatientIdentifierValueGenerator
   {
-    private PatientIdentifierDefinition definition;
-
-    public void Execute()
+    public string Generate(PatientIdentifierDefinition definition)
     {
-      switch (Definition.Style)
+      switch (definition.Style)
       {
         case PatientIdentifierStyle.AustralianDepartmentOfVeteransAffairsFileNumber:
           VeteransAffairsPatientIdentifierValueGenerator veteransAffairsGenerator = new VeteransAffairsPatientIdentifierValueGenerator();
-          veteransAffairsGenerator.Execute();
+          return veteransAffairsGenerator.Generate();
 
-          Value = veteransAffairsGenerator.Value;
-
-          break;
         default:
           MaskedTextRandomValueGenerator maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
 
-          maskedTextRandomValueGenerator.MaskFormat = Definition.MaskFormat;
-          maskedTextRandomValueGenerator.Execute();
-
-          Value = maskedTextRandomValueGenerator.Text;
-
-          break;
-      }
-    }
-
-    public string Value { get; private set; }
-
-    public PatientIdentifierDefinition Definition
-    {
-      get
-      {
-        System.Diagnostics.Debug.Assert(definition != null, "definition is not assigned.");
-
-        return definition;
-      }
-
-      set
-      {
-        definition = value;
+          maskedTextRandomValueGenerator.MaskFormat = definition.MaskFormat;
+          return maskedTextRandomValueGenerator.Generate();
       }
     }
   }
 
   public class VeteransAffairsPatientIdentifierValueGenerator
   {
-    private string value = "";
-
     private char[] numericCharacters = new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
     private List<string> warCodesList = new List<string>();
     private PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary veteransAffairsLibrary = new PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary();
@@ -65,7 +37,7 @@ namespace MedicalNumberGenerator
       }
     }
 
-    public void Execute()
+    public string Generate()
     {
       // To Do: generate a value using random data from the library, and random data for
       // the componet that doesn't come from the library
@@ -73,8 +45,6 @@ namespace MedicalNumberGenerator
       var valueBuilder = new StringBuilder("");
       const string MaskFormat = "LAAAAAAAA";
       var remainingCharacterCount = MaskFormat.Length;
-
-      value = "";
 
       var rnd = new Random((int)DateTime.Now.Ticks);
 
@@ -87,14 +57,11 @@ namespace MedicalNumberGenerator
         valueBuilder.Append(numericCharacters[rnd.Next(numericCharacters.Length)]);
       }
 
-      value = valueBuilder.ToString(); ;
+      var value = valueBuilder.ToString();
 
       System.Diagnostics.Debug.Assert(value.Length == MaskFormat.Length, String.Format("Length of generated value \"{0}\" is too long", value));
-    }
 
-    public string Value
-    {
-      get { return this.value; }
+      return value;
     }
   }
 }

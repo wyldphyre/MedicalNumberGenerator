@@ -22,11 +22,11 @@ namespace MedicalNumberGenerator
     private Dictionary<PatientIdentifierStyle, string> maskFormatByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
     private Dictionary<string, PatientIdentifierStyle> styleByNameDictionary = new Dictionary<string, PatientIdentifierStyle>();
 
-    public void Prepare(PatientIdentifierDefinition[] PatientIdentifierDefinitionList)
+    public PatientIdentifierStyleHelper(PatientIdentifierDefinition[] PatientIdentifierDefinitionList)
     {
       patientIdentifierDefinitionList = PatientIdentifierDefinitionList;
 
-      foreach (PatientIdentifierDefinition definition in PatientIdentifierDefinitionList)
+      foreach (var definition in PatientIdentifierDefinitionList)
       {
         nameByStyleDictionary.Add(definition.Style, definition.Name);
         maskFormatByStyleDictionary.Add(definition.Style, definition.MaskFormat);
