@@ -281,10 +281,6 @@ namespace MedicalNumberGenerator
 
       return !IssueList.Any();
     }
-    public bool HasIssues()
-    {
-      return IssueList.Count > 0;
-    }
 
     public PatientIdentifierStyle PatientIdentifierStyle
     {
