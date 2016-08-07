@@ -22,7 +22,7 @@ namespace MedicalNumberGenerator
     private void MedicalNumberGeneratorApplicationForm_Load(object sender, EventArgs e)
     {
       PatientIdentifierCopyButton.Enabled = false;
-      ProviderNumberCopyHintLabel.Visible = false;
+      MedicareProviderNumberCopyButton.Enabled = false;
 
       foreach (var definition in patientIdentifierDefinitionList)
         PatientIdentifierStyleComboBox.Items.Add(definition.Name);
@@ -78,6 +78,8 @@ namespace MedicalNumberGenerator
     }
     private void MedicareProviderNumberGenerateButton_Click(object sender, EventArgs e)
     {
+      MedicareProviderNumberCopyButton.Enabled = true;
+
       var maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
       var oldCursor = this.Cursor;
       var generatedProviderNumber = "";
@@ -109,21 +111,13 @@ namespace MedicalNumberGenerator
         this.Cursor = oldCursor;
       }
     }
-    private void GeneratedMedicareProviderNumberLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private void MedicareProviderNumberCopyButton_Click(object sender, EventArgs e)
     {
       Clipboard.SetText(GeneratedMedicareProviderNumberLinkLabel.Text);
     }
     private void CopyButton_Click(object sender, EventArgs e)
     {
       Clipboard.SetDataObject(GeneratedPatientIdentifierLinkLabel.Text, true);
-    }
-    private void GeneratedMedicareProviderNumberLinkLabel_MouseEnter(object sender, EventArgs e)
-    {
-      ProviderNumberCopyHintLabel.Visible = true;
-    }
-    private void GeneratedMedicareProviderNumberLinkLabel_MouseLeave(object sender, EventArgs e)
-    {
-      ProviderNumberCopyHintLabel.Visible = false;
     }
     private void ValidatePatientIdentifierTextBox_TextChanged(object sender, EventArgs e)
     {
@@ -160,6 +154,5 @@ namespace MedicalNumberGenerator
     {
       return text.Replace("-", "").Replace(" ", "");
     }
-
   }
 }

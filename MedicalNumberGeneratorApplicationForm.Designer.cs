@@ -30,6 +30,7 @@ namespace MedicalNumberGenerator
     {
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
+      this.PatientIdentifierCopyButton = new System.Windows.Forms.Button();
       this.ValidatePatientIdentifierTextBox = new System.Windows.Forms.TextBox();
       this.ValidatePatientIdentifierLable = new System.Windows.Forms.Label();
       this.GeneratedPatientIdentifierLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -37,7 +38,7 @@ namespace MedicalNumberGenerator
       this.PatientIdentifierTypeLabel = new System.Windows.Forms.Label();
       this.PatientIdentifierStyleComboBox = new System.Windows.Forms.ComboBox();
       this.MedicareProviderNumberTabPage = new System.Windows.Forms.TabPage();
-      this.ProviderNumberCopyHintLabel = new System.Windows.Forms.Label();
+      this.MedicareProviderNumberCopyButton = new System.Windows.Forms.Button();
       this.ValidateProviderNumberTextBox = new System.Windows.Forms.TextBox();
       this.ValidateProviderNumberLabel = new System.Windows.Forms.Label();
       this.GeneratedMedicareProviderNumberLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -45,7 +46,6 @@ namespace MedicalNumberGenerator
       this.OptionsGroupBox = new System.Windows.Forms.GroupBox();
       this.GenerateFormattedCheckBox = new System.Windows.Forms.CheckBox();
       this.GenerateInvalidCheckBox = new System.Windows.Forms.CheckBox();
-      this.PatientIdentifierCopyButton = new System.Windows.Forms.Button();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.MedicareProviderNumberTabPage.SuspendLayout();
@@ -81,6 +81,17 @@ namespace MedicalNumberGenerator
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "Patient Identifiers";
       this.tabPage1.UseVisualStyleBackColor = true;
+      // 
+      // PatientIdentifierCopyButton
+      // 
+      this.PatientIdentifierCopyButton.Enabled = false;
+      this.PatientIdentifierCopyButton.Location = new System.Drawing.Point(207, 37);
+      this.PatientIdentifierCopyButton.Name = "PatientIdentifierCopyButton";
+      this.PatientIdentifierCopyButton.Size = new System.Drawing.Size(38, 23);
+      this.PatientIdentifierCopyButton.TabIndex = 11;
+      this.PatientIdentifierCopyButton.Text = "copy";
+      this.PatientIdentifierCopyButton.UseVisualStyleBackColor = true;
+      this.PatientIdentifierCopyButton.Click += new System.EventHandler(this.CopyButton_Click);
       // 
       // ValidatePatientIdentifierTextBox
       // 
@@ -143,7 +154,7 @@ namespace MedicalNumberGenerator
       // 
       // MedicareProviderNumberTabPage
       // 
-      this.MedicareProviderNumberTabPage.Controls.Add(this.ProviderNumberCopyHintLabel);
+      this.MedicareProviderNumberTabPage.Controls.Add(this.MedicareProviderNumberCopyButton);
       this.MedicareProviderNumberTabPage.Controls.Add(this.ValidateProviderNumberTextBox);
       this.MedicareProviderNumberTabPage.Controls.Add(this.ValidateProviderNumberLabel);
       this.MedicareProviderNumberTabPage.Controls.Add(this.GeneratedMedicareProviderNumberLinkLabel);
@@ -156,14 +167,16 @@ namespace MedicalNumberGenerator
       this.MedicareProviderNumberTabPage.Text = "Medicare Provider Number";
       this.MedicareProviderNumberTabPage.UseVisualStyleBackColor = true;
       // 
-      // ProviderNumberCopyHintLabel
+      // MedicareProviderNumberCopyButton
       // 
-      this.ProviderNumberCopyHintLabel.AutoSize = true;
-      this.ProviderNumberCopyHintLabel.Location = new System.Drawing.Point(167, 11);
-      this.ProviderNumberCopyHintLabel.Name = "ProviderNumberCopyHintLabel";
-      this.ProviderNumberCopyHintLabel.Size = new System.Drawing.Size(74, 13);
-      this.ProviderNumberCopyHintLabel.TabIndex = 14;
-      this.ProviderNumberCopyHintLabel.Text = "(Click to copy)";
+      this.MedicareProviderNumberCopyButton.Enabled = false;
+      this.MedicareProviderNumberCopyButton.Location = new System.Drawing.Point(183, 6);
+      this.MedicareProviderNumberCopyButton.Name = "MedicareProviderNumberCopyButton";
+      this.MedicareProviderNumberCopyButton.Size = new System.Drawing.Size(38, 23);
+      this.MedicareProviderNumberCopyButton.TabIndex = 15;
+      this.MedicareProviderNumberCopyButton.Text = "copy";
+      this.MedicareProviderNumberCopyButton.UseVisualStyleBackColor = true;
+      this.MedicareProviderNumberCopyButton.Click += new System.EventHandler(this.MedicareProviderNumberCopyButton_Click);
       // 
       // ValidateProviderNumberTextBox
       // 
@@ -191,9 +204,6 @@ namespace MedicalNumberGenerator
       this.GeneratedMedicareProviderNumberLinkLabel.TabIndex = 1;
       this.GeneratedMedicareProviderNumberLinkLabel.TabStop = true;
       this.GeneratedMedicareProviderNumberLinkLabel.Text = "<unknown>";
-      this.GeneratedMedicareProviderNumberLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.GeneratedMedicareProviderNumberLinkLabel_LinkClicked);
-      this.GeneratedMedicareProviderNumberLinkLabel.MouseEnter += new System.EventHandler(this.GeneratedMedicareProviderNumberLinkLabel_MouseEnter);
-      this.GeneratedMedicareProviderNumberLinkLabel.MouseLeave += new System.EventHandler(this.GeneratedMedicareProviderNumberLinkLabel_MouseLeave);
       // 
       // MedicareProviderNumberGenerateButton
       // 
@@ -239,17 +249,6 @@ namespace MedicalNumberGenerator
       this.GenerateInvalidCheckBox.Text = "Generate invalid";
       this.GenerateInvalidCheckBox.UseVisualStyleBackColor = true;
       // 
-      // PatientIdentifierCopyButton
-      // 
-      this.PatientIdentifierCopyButton.Enabled = false;
-      this.PatientIdentifierCopyButton.Location = new System.Drawing.Point(207, 37);
-      this.PatientIdentifierCopyButton.Name = "PatientIdentifierCopyButton";
-      this.PatientIdentifierCopyButton.Size = new System.Drawing.Size(38, 23);
-      this.PatientIdentifierCopyButton.TabIndex = 11;
-      this.PatientIdentifierCopyButton.Text = "copy";
-      this.PatientIdentifierCopyButton.UseVisualStyleBackColor = true;
-      this.PatientIdentifierCopyButton.Click += new System.EventHandler(this.CopyButton_Click);
-      // 
       // MedicalNumberGeneratorApplicationForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -289,8 +288,8 @@ namespace MedicalNumberGenerator
     private System.Windows.Forms.Label ValidatePatientIdentifierLable;
     private System.Windows.Forms.TextBox ValidateProviderNumberTextBox;
     private System.Windows.Forms.Label ValidateProviderNumberLabel;
-    private System.Windows.Forms.Label ProviderNumberCopyHintLabel;
     private System.Windows.Forms.Button PatientIdentifierCopyButton;
+    private System.Windows.Forms.Button MedicareProviderNumberCopyButton;
   }
 }
 
