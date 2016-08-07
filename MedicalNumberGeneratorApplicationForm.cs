@@ -29,7 +29,6 @@ namespace MedicalNumberGenerator
 
       PatientIdentifierStyleComboBox.SelectedIndex = 0;
     }
-
     private void PatientIdentifierTypeGenerateButton_Click(object sender, EventArgs e)
     {
       var style = helper.GetPatientIdentifierStyleByName(PatientIdentifierStyleComboBox.Text);
@@ -76,7 +75,6 @@ namespace MedicalNumberGenerator
         }
       }
     }
-
     private void MedicareProviderNumberGenerateButton_Click(object sender, EventArgs e)
     {
       var maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
@@ -110,22 +108,30 @@ namespace MedicalNumberGenerator
         this.Cursor = oldCursor;
       }
     }
-
     private void GeneratedMedicareProviderNumberLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
       Clipboard.SetText(GeneratedMedicareProviderNumberLinkLabel.Text);
     }
-
     private void GeneratedPatientIdentifierLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
       Clipboard.SetDataObject(GeneratedPatientIdentifierLinkLabel.Text, true);
     }
-
-    private string RemoveFormatting(string text)
+    private void GeneratedPatientIdentifierLinkLabel_MouseEnter(object sender, EventArgs e)
     {
-      return text.Replace("-", "").Replace(" ", "");
+      PatientIdentifierCopyHintLabel.Visible = true;
     }
-
+    private void GeneratedPatientIdentifierLinkLabel_MouseLeave(object sender, EventArgs e)
+    {
+      PatientIdentifierCopyHintLabel.Visible = false;
+    }
+    private void GeneratedMedicareProviderNumberLinkLabel_MouseEnter(object sender, EventArgs e)
+    {
+      ProviderNumberCopyHintLabel.Visible = true;
+    }
+    private void GeneratedMedicareProviderNumberLinkLabel_MouseLeave(object sender, EventArgs e)
+    {
+      ProviderNumberCopyHintLabel.Visible = false;
+    }
     private void ValidatePatientIdentifierTextBox_TextChanged(object sender, EventArgs e)
     {
       if (ValidatePatientIdentifierTextBox.Text == string.Empty)
@@ -148,7 +154,6 @@ namespace MedicalNumberGenerator
         }
       }
     }
-
     private void ValidateProviderNumberTextBox_TextChanged(object sender, EventArgs e)
     {
       if (ValidateProviderNumberTextBox.Text == String.Empty)
@@ -158,25 +163,9 @@ namespace MedicalNumberGenerator
         ValidateProviderNumberTextBox.BackColor = validator.Validate(ValidateProviderNumberTextBox.Text) ? Color.LightGreen : Color.Red;
       }
     }
-
-    private void GeneratedPatientIdentifierLinkLabel_MouseEnter(object sender, EventArgs e)
+    private string RemoveFormatting(string text)
     {
-      PatientIdentifierCopyHintLabel.Visible = true;
-    }
-
-    private void GeneratedPatientIdentifierLinkLabel_MouseLeave(object sender, EventArgs e)
-    {
-      PatientIdentifierCopyHintLabel.Visible = false;
-    }
-
-    private void GeneratedMedicareProviderNumberLinkLabel_MouseEnter(object sender, EventArgs e)
-    {
-      ProviderNumberCopyHintLabel.Visible = true;
-    }
-
-    private void GeneratedMedicareProviderNumberLinkLabel_MouseLeave(object sender, EventArgs e)
-    {
-      ProviderNumberCopyHintLabel.Visible = false;
+      return text.Replace("-", "").Replace(" ", "");
     }
   }
 }
