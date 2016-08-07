@@ -30,7 +30,6 @@ namespace MedicalNumberGenerator
     {
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage1 = new System.Windows.Forms.TabPage();
-      this.PatientIdentifierCopyHintLabel = new System.Windows.Forms.Label();
       this.ValidatePatientIdentifierTextBox = new System.Windows.Forms.TextBox();
       this.ValidatePatientIdentifierLable = new System.Windows.Forms.Label();
       this.GeneratedPatientIdentifierLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -46,6 +45,7 @@ namespace MedicalNumberGenerator
       this.OptionsGroupBox = new System.Windows.Forms.GroupBox();
       this.GenerateFormattedCheckBox = new System.Windows.Forms.CheckBox();
       this.GenerateInvalidCheckBox = new System.Windows.Forms.CheckBox();
+      this.PatientIdentifierCopyButton = new System.Windows.Forms.Button();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
       this.MedicareProviderNumberTabPage.SuspendLayout();
@@ -54,9 +54,9 @@ namespace MedicalNumberGenerator
       // 
       // tabControl1
       // 
-      this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                  | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.tabControl1.Controls.Add(this.tabPage1);
       this.tabControl1.Controls.Add(this.MedicareProviderNumberTabPage);
       this.tabControl1.Location = new System.Drawing.Point(12, 12);
@@ -67,7 +67,7 @@ namespace MedicalNumberGenerator
       // 
       // tabPage1
       // 
-      this.tabPage1.Controls.Add(this.PatientIdentifierCopyHintLabel);
+      this.tabPage1.Controls.Add(this.PatientIdentifierCopyButton);
       this.tabPage1.Controls.Add(this.ValidatePatientIdentifierTextBox);
       this.tabPage1.Controls.Add(this.ValidatePatientIdentifierLable);
       this.tabPage1.Controls.Add(this.GeneratedPatientIdentifierLinkLabel);
@@ -81,15 +81,6 @@ namespace MedicalNumberGenerator
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "Patient Identifiers";
       this.tabPage1.UseVisualStyleBackColor = true;
-      // 
-      // PatientIdentifierCopyHintLabel
-      // 
-      this.PatientIdentifierCopyHintLabel.AutoSize = true;
-      this.PatientIdentifierCopyHintLabel.Location = new System.Drawing.Point(204, 41);
-      this.PatientIdentifierCopyHintLabel.Name = "PatientIdentifierCopyHintLabel";
-      this.PatientIdentifierCopyHintLabel.Size = new System.Drawing.Size(74, 13);
-      this.PatientIdentifierCopyHintLabel.TabIndex = 12;
-      this.PatientIdentifierCopyHintLabel.Text = "(Click to copy)";
       // 
       // ValidatePatientIdentifierTextBox
       // 
@@ -118,9 +109,6 @@ namespace MedicalNumberGenerator
       this.GeneratedPatientIdentifierLinkLabel.TabIndex = 9;
       this.GeneratedPatientIdentifierLinkLabel.TabStop = true;
       this.GeneratedPatientIdentifierLinkLabel.Text = "<unknown>";
-      this.GeneratedPatientIdentifierLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.GeneratedPatientIdentifierLinkLabel_LinkClicked);
-      this.GeneratedPatientIdentifierLinkLabel.MouseEnter += new System.EventHandler(this.GeneratedPatientIdentifierLinkLabel_MouseEnter);
-      this.GeneratedPatientIdentifierLinkLabel.MouseLeave += new System.EventHandler(this.GeneratedPatientIdentifierLinkLabel_MouseLeave);
       // 
       // PatientIdentifierTypeGenerateButton
       // 
@@ -144,8 +132,8 @@ namespace MedicalNumberGenerator
       // 
       // PatientIdentifierStyleComboBox
       // 
-      this.PatientIdentifierStyleComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.PatientIdentifierStyleComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.PatientIdentifierStyleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.PatientIdentifierStyleComboBox.FormattingEnabled = true;
       this.PatientIdentifierStyleComboBox.Location = new System.Drawing.Point(122, 6);
@@ -219,8 +207,8 @@ namespace MedicalNumberGenerator
       // 
       // OptionsGroupBox
       // 
-      this.OptionsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.OptionsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.OptionsGroupBox.Controls.Add(this.GenerateFormattedCheckBox);
       this.OptionsGroupBox.Controls.Add(this.GenerateInvalidCheckBox);
       this.OptionsGroupBox.Location = new System.Drawing.Point(12, 143);
@@ -250,6 +238,17 @@ namespace MedicalNumberGenerator
       this.GenerateInvalidCheckBox.TabIndex = 10;
       this.GenerateInvalidCheckBox.Text = "Generate invalid";
       this.GenerateInvalidCheckBox.UseVisualStyleBackColor = true;
+      // 
+      // PatientIdentifierCopyButton
+      // 
+      this.PatientIdentifierCopyButton.Enabled = false;
+      this.PatientIdentifierCopyButton.Location = new System.Drawing.Point(207, 37);
+      this.PatientIdentifierCopyButton.Name = "PatientIdentifierCopyButton";
+      this.PatientIdentifierCopyButton.Size = new System.Drawing.Size(38, 23);
+      this.PatientIdentifierCopyButton.TabIndex = 11;
+      this.PatientIdentifierCopyButton.Text = "copy";
+      this.PatientIdentifierCopyButton.UseVisualStyleBackColor = true;
+      this.PatientIdentifierCopyButton.Click += new System.EventHandler(this.CopyButton_Click);
       // 
       // MedicalNumberGeneratorApplicationForm
       // 
@@ -290,9 +289,8 @@ namespace MedicalNumberGenerator
     private System.Windows.Forms.Label ValidatePatientIdentifierLable;
     private System.Windows.Forms.TextBox ValidateProviderNumberTextBox;
     private System.Windows.Forms.Label ValidateProviderNumberLabel;
-    private System.Windows.Forms.Label PatientIdentifierCopyHintLabel;
     private System.Windows.Forms.Label ProviderNumberCopyHintLabel;
-
+    private System.Windows.Forms.Button PatientIdentifierCopyButton;
   }
 }
 

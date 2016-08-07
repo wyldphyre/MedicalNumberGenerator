@@ -21,7 +21,7 @@ namespace MedicalNumberGenerator
 
     private void MedicalNumberGeneratorApplicationForm_Load(object sender, EventArgs e)
     {
-      PatientIdentifierCopyHintLabel.Visible = false;
+      PatientIdentifierCopyButton.Enabled = false;
       ProviderNumberCopyHintLabel.Visible = false;
 
       foreach (var definition in patientIdentifierDefinitionList)
@@ -31,6 +31,7 @@ namespace MedicalNumberGenerator
     }
     private void PatientIdentifierTypeGenerateButton_Click(object sender, EventArgs e)
     {
+      PatientIdentifierCopyButton.Enabled = true;
       var style = helper.GetPatientIdentifierStyleByName(PatientIdentifierStyleComboBox.Text);
       var definition = helper.GetPatientIdentifierDefinitionByStyle(style);
 
@@ -112,17 +113,9 @@ namespace MedicalNumberGenerator
     {
       Clipboard.SetText(GeneratedMedicareProviderNumberLinkLabel.Text);
     }
-    private void GeneratedPatientIdentifierLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private void CopyButton_Click(object sender, EventArgs e)
     {
       Clipboard.SetDataObject(GeneratedPatientIdentifierLinkLabel.Text, true);
-    }
-    private void GeneratedPatientIdentifierLinkLabel_MouseEnter(object sender, EventArgs e)
-    {
-      PatientIdentifierCopyHintLabel.Visible = true;
-    }
-    private void GeneratedPatientIdentifierLinkLabel_MouseLeave(object sender, EventArgs e)
-    {
-      PatientIdentifierCopyHintLabel.Visible = false;
     }
     private void GeneratedMedicareProviderNumberLinkLabel_MouseEnter(object sender, EventArgs e)
     {
@@ -167,5 +160,6 @@ namespace MedicalNumberGenerator
     {
       return text.Replace("-", "").Replace(" ", "");
     }
+
   }
 }
