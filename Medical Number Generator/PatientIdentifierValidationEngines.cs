@@ -214,13 +214,9 @@ namespace MedicalNumberGenerator
 
             if (IssueList.Count == 0)
             {
-              int characterValue1;
-              int characterValue2;
-              int characterValue3;
-
-              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(Value[0], out characterValue1);
-              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(Value[1], out characterValue2);
-              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(Value[2], out characterValue3);
+              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(Value[0], out int characterValue1);
+              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(Value[1], out int characterValue2);
+              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(Value[2], out int characterValue3);
               int characterValue4 = int.Parse(Value[3].ToString());
               int characterValue5 = int.Parse(Value[4].ToString());
               int characterValue6 = int.Parse(Value[5].ToString());

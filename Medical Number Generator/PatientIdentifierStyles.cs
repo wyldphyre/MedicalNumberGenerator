@@ -38,9 +38,7 @@ namespace MedicalNumberGenerator
     {
       Debug.Assert(nameByStyleDictionary.ContainsKey(style), String.Format("Style \"{0}\" is not a known patient identifier style.", style.ToString()));
 
-      string styleName;
-
-      nameByStyleDictionary.TryGetValue(style, out styleName);
+      nameByStyleDictionary.TryGetValue(style, out string styleName);
 
       return styleName;
     }
@@ -49,9 +47,7 @@ namespace MedicalNumberGenerator
     {
       Debug.Assert(styleByNameDictionary.ContainsKey(name), String.Format("Name \"{0}\" is not a known patient identifier style name.", name));
 
-      PatientIdentifierStyle style;
-
-      styleByNameDictionary.TryGetValue(name, out style);
+      styleByNameDictionary.TryGetValue(name, out PatientIdentifierStyle style);
 
       return style;
     }
@@ -60,9 +56,7 @@ namespace MedicalNumberGenerator
     {
       Debug.Assert(maskFormatByStyleDictionary.ContainsKey(style), String.Format("Style \"{0}\" is not a known patient identifier style.", style.ToString()));
 
-      string maskFormat;
-
-      maskFormatByStyleDictionary.TryGetValue(style, out maskFormat);
+      maskFormatByStyleDictionary.TryGetValue(style, out string maskFormat);
 
       return maskFormat;
     }

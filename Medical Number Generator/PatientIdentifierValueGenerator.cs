@@ -15,9 +15,10 @@ namespace MedicalNumberGenerator
           return veteransAffairsGenerator.Generate();
 
         default:
-          MaskedTextRandomValueGenerator maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
-
-          maskedTextRandomValueGenerator.MaskFormat = definition.MaskFormat;
+          MaskedTextRandomValueGenerator maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator()
+          {
+            MaskFormat = definition.MaskFormat
+          };
           return maskedTextRandomValueGenerator.Generate();
       }
     }

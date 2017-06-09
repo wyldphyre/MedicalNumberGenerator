@@ -68,9 +68,7 @@ namespace MedicalNumberGenerator
              characterValue6 +
              Array.IndexOf(practiceLocationCharacters, seventhCharacter) * 6) % 11;
 
-        char validationCheckDigit;
-
-        practiceLocationCheckDigitValueDictionary.TryGetValue(validationCheckDigitValue + 1, out validationCheckDigit);
+        practiceLocationCheckDigitValueDictionary.TryGetValue(validationCheckDigitValue + 1, out char validationCheckDigit);
 
         if (validationCheckDigit != paddedProviderNumber[7])
           Issues.Add("Check digit character is not valid.");

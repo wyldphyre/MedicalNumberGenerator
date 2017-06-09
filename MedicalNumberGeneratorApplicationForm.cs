@@ -42,8 +42,10 @@ namespace MedicalNumberGenerator
       else
       {
         var valueGenerator = new PatientIdentifierValueGenerator();
-        var validationEngine = new PatientIdentifierValidationEngine();
-        validationEngine.PatientIdentifierStyle = definition.Style;
+        var validationEngine = new PatientIdentifierValidationEngine()
+        {
+          PatientIdentifierStyle = definition.Style
+        };
         var oldCursor = this.Cursor;
         string generatedIdentifier = "";
 
@@ -134,9 +136,10 @@ namespace MedicalNumberGenerator
         }
         else
         {
-          var validationEngine = new PatientIdentifierValidationEngine();
-          validationEngine.PatientIdentifierStyle = definition.Style;
-
+          var validationEngine = new PatientIdentifierValidationEngine()
+          {
+            PatientIdentifierStyle = definition.Style
+          };
           ValidatePatientIdentifierTextBox.BackColor = validationEngine.Validate(ValidatePatientIdentifierTextBox.Text) ? Color.LightGreen : Color.Red;
         }
       }
