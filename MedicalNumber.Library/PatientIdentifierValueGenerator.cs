@@ -26,9 +26,9 @@ namespace MedicalNumber
 
   public class VeteransAffairsPatientIdentifierValueGenerator
   {
-    private char[] numericCharacters = new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
-    private List<string> warCodesList = new List<string>();
-    private PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary veteransAffairsLibrary = new PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary();
+    private readonly char[] numericCharacters = new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
+    private readonly List<string> warCodesList = new List<string>();
+    private readonly PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary veteransAffairsLibrary = new PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary();
 
     public VeteransAffairsPatientIdentifierValueGenerator()
     {

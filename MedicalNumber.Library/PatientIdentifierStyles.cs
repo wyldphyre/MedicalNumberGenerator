@@ -15,12 +15,12 @@ namespace MedicalNumber
 
   public class PatientIdentifierStyleHelper
   {
-    private PatientIdentifierDefinition[] patientIdentifierDefinitionList;
+    private readonly PatientIdentifierDefinition[] patientIdentifierDefinitionList;
 
     // for internal use
-    private Dictionary<PatientIdentifierStyle, string> nameByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
-    private Dictionary<PatientIdentifierStyle, string> maskFormatByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
-    private Dictionary<string, PatientIdentifierStyle> styleByNameDictionary = new Dictionary<string, PatientIdentifierStyle>();
+    private readonly Dictionary<PatientIdentifierStyle, string> nameByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
+    private readonly Dictionary<PatientIdentifierStyle, string> maskFormatByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
+    private readonly Dictionary<string, PatientIdentifierStyle> styleByNameDictionary = new Dictionary<string, PatientIdentifierStyle>();
 
     public PatientIdentifierStyleHelper(PatientIdentifierDefinition[] PatientIdentifierDefinitionList)
     {
@@ -79,78 +79,69 @@ namespace MedicalNumber
 
   public class PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary
   {
-    private char[] stateCodeCharacters = new[] { 'N', 'V', 'Q', 'S', 'W', 'T' };
-    private Dictionary<string, string> warCodeNameDictionary = new Dictionary<string, string>();
-
     public PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary()
     {
-      warCodeNameDictionary.Add("", "Australian Forces 1914");
-      warCodeNameDictionary.Add("X", "Australian Forces 1939");
-      warCodeNameDictionary.Add("KM", "Korea Malaya");
-      warCodeNameDictionary.Add("SR", "Far East Strategic Reserve");
-      warCodeNameDictionary.Add("SS", "Special Overseas Act");
-      warCodeNameDictionary.Add("SM", "Serving Members");
-      warCodeNameDictionary.Add("SWP", "Seamans War Pension 1939");
-      warCodeNameDictionary.Add("AGX", "Act of Grace 1939");
-      warCodeNameDictionary.Add("BW", "Boer War");
-      warCodeNameDictionary.Add("GW", "Gulf War Australian");
-      warCodeNameDictionary.Add("CGW", "Gulf War British Commonwealth");
-      warCodeNameDictionary.Add("P", "British Pension 1914");
-      warCodeNameDictionary.Add("PX", "British Pension 1939");
-      warCodeNameDictionary.Add("AD", "British Admiralty");
-      warCodeNameDictionary.Add("PAM", "British Air Ministry");
-      warCodeNameDictionary.Add("PCA", "Government and Admin");
-      warCodeNameDictionary.Add("PCR", "British Service Department CRO");
-      warCodeNameDictionary.Add("PCV", "British Civilians");
-      warCodeNameDictionary.Add("PMS", "British Merchant Seamen 1914");
-      warCodeNameDictionary.Add("PSW", "British Merchant Seamen 1939");
-      warCodeNameDictionary.Add("PWO", "British War Office");
-      warCodeNameDictionary.Add("HKX", "Hong Kong 1939");
-      warCodeNameDictionary.Add("MAL", "Malaysia");
-      warCodeNameDictionary.Add("N", "New Zealand 1914");
-      warCodeNameDictionary.Add("NX", "New Zealand 1939");
-      warCodeNameDictionary.Add("NSW", "New Zealand Merchant Navy");
-      warCodeNameDictionary.Add("CN", "Canada 1914");
-      warCodeNameDictionary.Add("CNX", "Canada 1939");
-      warCodeNameDictionary.Add("IV", "Indigenous Veterans PNG");
-      warCodeNameDictionary.Add("NF", "Newfoundland");
-      warCodeNameDictionary.Add("NG", "New Guinea Civilians");
-      warCodeNameDictionary.Add("RD", "Southern Rhodesia 1914");
-      warCodeNameDictionary.Add("RDX", "Southern Rhodesia 1939");
-      warCodeNameDictionary.Add("SA", "South Africa 1914");
-      warCodeNameDictionary.Add("SAX", "South Africa 1939");
-      warCodeNameDictionary.Add("A", "Allied Forces");
-      warCodeNameDictionary.Add("BUR", "Burma");
-      warCodeNameDictionary.Add("CNK", "Canada Korea");
-      warCodeNameDictionary.Add("CNS", "Canada Special Forces");
-      warCodeNameDictionary.Add("FIJ", "Fiji");
-      warCodeNameDictionary.Add("GHA", "Ghana");
-      warCodeNameDictionary.Add("HKS", "Hong Kong");
-      warCodeNameDictionary.Add("IND", "India");
-      warCodeNameDictionary.Add("KYA", "Kenya");
-      warCodeNameDictionary.Add("MAU", "Mauritius");
-      warCodeNameDictionary.Add("MLS", "Malaysia Singapore");
-      warCodeNameDictionary.Add("MTX", "Malta");
-      warCodeNameDictionary.Add("MWI", "Malawi");
-      warCodeNameDictionary.Add("NK", "New Zealand Korea");
-      warCodeNameDictionary.Add("NGR", "Nigeria");
-      warCodeNameDictionary.Add("NRD", "Northern Rhodesia");
-      warCodeNameDictionary.Add("NSS", "New Zealand Special Overseas");
-      warCodeNameDictionary.Add("PK", "British Korea Malaya");
-      warCodeNameDictionary.Add("SL", "Sierra Leone");
-      warCodeNameDictionary.Add("SUD", "Sudan");
-      warCodeNameDictionary.Add("TZA", "Tanzania");
+      WarCodeNameDictionary.Add("", "Australian Forces 1914");
+      WarCodeNameDictionary.Add("X", "Australian Forces 1939");
+      WarCodeNameDictionary.Add("KM", "Korea Malaya");
+      WarCodeNameDictionary.Add("SR", "Far East Strategic Reserve");
+      WarCodeNameDictionary.Add("SS", "Special Overseas Act");
+      WarCodeNameDictionary.Add("SM", "Serving Members");
+      WarCodeNameDictionary.Add("SWP", "Seamans War Pension 1939");
+      WarCodeNameDictionary.Add("AGX", "Act of Grace 1939");
+      WarCodeNameDictionary.Add("BW", "Boer War");
+      WarCodeNameDictionary.Add("GW", "Gulf War Australian");
+      WarCodeNameDictionary.Add("CGW", "Gulf War British Commonwealth");
+      WarCodeNameDictionary.Add("P", "British Pension 1914");
+      WarCodeNameDictionary.Add("PX", "British Pension 1939");
+      WarCodeNameDictionary.Add("AD", "British Admiralty");
+      WarCodeNameDictionary.Add("PAM", "British Air Ministry");
+      WarCodeNameDictionary.Add("PCA", "Government and Admin");
+      WarCodeNameDictionary.Add("PCR", "British Service Department CRO");
+      WarCodeNameDictionary.Add("PCV", "British Civilians");
+      WarCodeNameDictionary.Add("PMS", "British Merchant Seamen 1914");
+      WarCodeNameDictionary.Add("PSW", "British Merchant Seamen 1939");
+      WarCodeNameDictionary.Add("PWO", "British War Office");
+      WarCodeNameDictionary.Add("HKX", "Hong Kong 1939");
+      WarCodeNameDictionary.Add("MAL", "Malaysia");
+      WarCodeNameDictionary.Add("N", "New Zealand 1914");
+      WarCodeNameDictionary.Add("NX", "New Zealand 1939");
+      WarCodeNameDictionary.Add("NSW", "New Zealand Merchant Navy");
+      WarCodeNameDictionary.Add("CN", "Canada 1914");
+      WarCodeNameDictionary.Add("CNX", "Canada 1939");
+      WarCodeNameDictionary.Add("IV", "Indigenous Veterans PNG");
+      WarCodeNameDictionary.Add("NF", "Newfoundland");
+      WarCodeNameDictionary.Add("NG", "New Guinea Civilians");
+      WarCodeNameDictionary.Add("RD", "Southern Rhodesia 1914");
+      WarCodeNameDictionary.Add("RDX", "Southern Rhodesia 1939");
+      WarCodeNameDictionary.Add("SA", "South Africa 1914");
+      WarCodeNameDictionary.Add("SAX", "South Africa 1939");
+      WarCodeNameDictionary.Add("A", "Allied Forces");
+      WarCodeNameDictionary.Add("BUR", "Burma");
+      WarCodeNameDictionary.Add("CNK", "Canada Korea");
+      WarCodeNameDictionary.Add("CNS", "Canada Special Forces");
+      WarCodeNameDictionary.Add("FIJ", "Fiji");
+      WarCodeNameDictionary.Add("GHA", "Ghana");
+      WarCodeNameDictionary.Add("HKS", "Hong Kong");
+      WarCodeNameDictionary.Add("IND", "India");
+      WarCodeNameDictionary.Add("KYA", "Kenya");
+      WarCodeNameDictionary.Add("MAU", "Mauritius");
+      WarCodeNameDictionary.Add("MLS", "Malaysia Singapore");
+      WarCodeNameDictionary.Add("MTX", "Malta");
+      WarCodeNameDictionary.Add("MWI", "Malawi");
+      WarCodeNameDictionary.Add("NK", "New Zealand Korea");
+      WarCodeNameDictionary.Add("NGR", "Nigeria");
+      WarCodeNameDictionary.Add("NRD", "Northern Rhodesia");
+      WarCodeNameDictionary.Add("NSS", "New Zealand Special Overseas");
+      WarCodeNameDictionary.Add("PK", "British Korea Malaya");
+      WarCodeNameDictionary.Add("SL", "Sierra Leone");
+      WarCodeNameDictionary.Add("SUD", "Sudan");
+      WarCodeNameDictionary.Add("TZA", "Tanzania");
     }
 
-    public char[] StateCodeCharacters
-    {
-      get { return stateCodeCharacters; }
-    }
+    public char[] StateCodeCharacters { get; } = new[] { 'N', 'V', 'Q', 'S', 'W', 'T' };
 
-    public Dictionary<string, string> WarCodeNameDictionary
-    {
-      get { return warCodeNameDictionary; }
-    }
+    public Dictionary<string, string> WarCodeNameDictionary { get; } = new Dictionary<string, string>();
   }
 
   //public class PatientIdenitiferStyleNewZealandNationalHealthIndexComponentLibrary

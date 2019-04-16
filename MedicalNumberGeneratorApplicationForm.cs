@@ -7,8 +7,8 @@ namespace MedicalNumberGenerator
 {
   public partial class MedicalNumberGeneratorApplicationForm : Form
   {
-    private PatientIdentifierStyleHelper helper;
-    private PatientIdentifierDefinition[] patientIdentifierDefinitionList;
+    private readonly PatientIdentifierStyleHelper helper;
+    private readonly PatientIdentifierDefinition[] patientIdentifierDefinitionList;
     private readonly MedicareProviderNumberValidator validator;
 
     public MedicalNumberGeneratorApplicationForm()
@@ -48,8 +48,6 @@ namespace MedicalNumberGenerator
           PatientIdentifierStyle = definition.Style
         };
         var oldCursor = this.Cursor;
-        string generatedIdentifier = "";
-
         this.Cursor = Cursors.WaitCursor;
         try
         {
@@ -66,7 +64,7 @@ namespace MedicalNumberGenerator
           }
           while (!valid);
 
-          generatedIdentifier = value;
+          var generatedIdentifier = value;
 
           if (!GenerateFormattedCheckBox.Checked)
             generatedIdentifier = RemoveFormatting(generatedIdentifier);
@@ -85,7 +83,6 @@ namespace MedicalNumberGenerator
 
       var maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
       var oldCursor = this.Cursor;
-      var generatedProviderNumber = "";
 
       maskedTextRandomValueGenerator.MaskFormat = "999999AL";
 
@@ -93,6 +90,7 @@ namespace MedicalNumberGenerator
       try
       {
         var valid = false;
+        var generatedProviderNumber = string.Empty;
         do
         {
           generatedProviderNumber = maskedTextRandomValueGenerator.Generate();

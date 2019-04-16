@@ -6,11 +6,9 @@ namespace MedicalNumber
 {
   public class PatientIdentifierValidationEngine : Object
   {
-    private PatientIdentifierStyle patientIdentifierStyle;
-    
     // for internal use
-    private Dictionary<char, int> newZealandNationalHealthIndexAlphabetIntegerDictionary = new Dictionary<char, int>();
-    private PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary veteransAffairsLibrary = new PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary();
+    private readonly Dictionary<char, int> newZealandNationalHealthIndexAlphabetIntegerDictionary = new Dictionary<char, int>();
+    private readonly PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary veteransAffairsLibrary = new PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary();
 
     private bool StringIsAlphanumeric(string value)
     {
@@ -71,7 +69,7 @@ namespace MedicalNumber
     {
       IssueList.Clear();
 
-      switch (patientIdentifierStyle)
+      switch (PatientIdentifierStyle)
       {
         case PatientIdentifierStyle.AustralianMedicareNumber:
           
@@ -272,17 +270,13 @@ namespace MedicalNumber
 
           break;
         default:
-          throw new Exception(String.Format("Patient identifier style \"{0}\" is not handled by the validation engine.", patientIdentifierStyle.ToString()));
+          throw new Exception(String.Format("Patient identifier style \"{0}\" is not handled by the validation engine.", PatientIdentifierStyle.ToString()));
       }
 
       return !IssueList.Any();
     }
 
-    public PatientIdentifierStyle PatientIdentifierStyle
-    {
-      get { return patientIdentifierStyle; }
-      set { patientIdentifierStyle = value; }
-    }
+    public PatientIdentifierStyle PatientIdentifierStyle { get; set; }
     public List<string> IssueList { get; private set; }
   }
 }
