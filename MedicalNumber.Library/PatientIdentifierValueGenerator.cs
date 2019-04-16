@@ -11,15 +11,10 @@ namespace MedicalNumber
       switch (definition.Style)
       {
         case PatientIdentifierStyle.AustralianDepartmentOfVeteransAffairsFileNumber:
-          VeteransAffairsPatientIdentifierValueGenerator veteransAffairsGenerator = new VeteransAffairsPatientIdentifierValueGenerator();
-          return veteransAffairsGenerator.Generate();
+          return new VeteransAffairsPatientIdentifierValueGenerator().Generate();
 
         default:
-          MaskedTextRandomValueGenerator maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator()
-          {
-            MaskFormat = definition.MaskFormat
-          };
-          return maskedTextRandomValueGenerator.Generate();
+          return new MaskedTextRandomValueGenerator().Generate(definition.MaskFormat);
       }
     }
   }
@@ -43,7 +38,7 @@ namespace MedicalNumber
       // To Do: generate a value using random data from the library, and random data for
       // the componet that doesn't come from the library
 
-      var valueBuilder = new StringBuilder("");
+      var valueBuilder = new StringBuilder(string.Empty);
       const string MaskFormat = "LAAAAAAAA";
       var remainingCharacterCount = MaskFormat.Length;
 

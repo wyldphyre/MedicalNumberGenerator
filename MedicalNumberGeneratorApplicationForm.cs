@@ -43,10 +43,7 @@ namespace MedicalNumberGenerator
       else
       {
         var valueGenerator = new PatientIdentifierValueGenerator();
-        var validationEngine = new PatientIdentifierValidationEngine()
-        {
-          PatientIdentifierStyle = definition.Style
-        };
+        var validationEngine = new PatientIdentifierValidationEngine();
         var oldCursor = this.Cursor;
         this.Cursor = Cursors.WaitCursor;
         try
@@ -57,7 +54,7 @@ namespace MedicalNumberGenerator
           {
             value = valueGenerator.Generate(definition);
 
-            valid = validationEngine.Validate(value);
+            valid = validationEngine.Validate(value, definition.Style);
 
             if (GenerateInvalidCheckBox.Checked)
               valid = !valid;
@@ -84,8 +81,6 @@ namespace MedicalNumberGenerator
       var maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
       var oldCursor = this.Cursor;
 
-      maskedTextRandomValueGenerator.MaskFormat = "999999AL";
-
       this.Cursor = Cursors.WaitCursor;
       try
       {
@@ -93,7 +88,7 @@ namespace MedicalNumberGenerator
         var generatedProviderNumber = string.Empty;
         do
         {
-          generatedProviderNumber = maskedTextRandomValueGenerator.Generate();
+          generatedProviderNumber = maskedTextRandomValueGenerator.Generate("999999AL");
 
           valid = validator.Validate(generatedProviderNumber);
 
@@ -135,11 +130,8 @@ namespace MedicalNumberGenerator
         }
         else
         {
-          var validationEngine = new PatientIdentifierValidationEngine()
-          {
-            PatientIdentifierStyle = definition.Style
-          };
-          ValidatePatientIdentifierTextBox.BackColor = validationEngine.Validate(ValidatePatientIdentifierTextBox.Text) ? Color.LightGreen : Color.Red;
+          var validationEngine = new PatientIdentifierValidationEngine();
+          ValidatePatientIdentifierTextBox.BackColor = validationEngine.Validate(ValidatePatientIdentifierTextBox.Text, definition.Style) ? Color.LightGreen : Color.Red;
         }
       }
     }

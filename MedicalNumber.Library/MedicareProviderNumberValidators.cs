@@ -29,11 +29,11 @@ namespace MedicalNumber
     public List<string> Issues { get; private set; }
     public bool Validate(string Value)
     {
-      System.Diagnostics.Debug.Assert(Value != "" && Value != null, "You must provide a Value to validate");
+      System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(Value), "You must provide a Value to validate");
 
       Issues.Clear();
 
-      var paddedProviderNumber = "";
+      var paddedProviderNumber = string.Empty;
 
       if (Value.Length < 7)
         Issues.Add("Provider number must be at least 7 characters");

@@ -15,16 +15,16 @@ namespace MedicalNumber
       alphanumericCharacters = alphabeticCharacters.Union(numericCharacters).ToArray();
     }
 
-    public string Generate()
+    public string Generate(string maskFormat)
     {
       // To Do: run a validation to ensure that the mask format only contains characters that
       // the generator knows how to deal with.
 
-      var textBuilder = new StringBuilder("", MaskFormat.Length);
+      var textBuilder = new StringBuilder(string.Empty, maskFormat.Length);
 
       Random rnd = new Random((int)DateTime.Now.Ticks);
 
-      foreach (char maskCharacter in MaskFormat)
+      foreach (char maskCharacter in maskFormat)
       {
         switch (maskCharacter)
         {
@@ -45,7 +45,5 @@ namespace MedicalNumber
 
       return textBuilder.ToString();
     }
-
-    public string MaskFormat { get; set; }
   }
 }

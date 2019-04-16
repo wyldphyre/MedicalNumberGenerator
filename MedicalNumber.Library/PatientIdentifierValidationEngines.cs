@@ -10,10 +10,7 @@ namespace MedicalNumber
     private readonly Dictionary<char, int> newZealandNationalHealthIndexAlphabetIntegerDictionary = new Dictionary<char, int>();
     private readonly PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary veteransAffairsLibrary = new PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary();
 
-    private bool StringIsAlphanumeric(string value)
-    {
-      return value.All(C => Char.IsLetterOrDigit(C));
-    }
+    private bool StringIsAlphanumeric(string value) => value.All(C => Char.IsLetterOrDigit(C));
     private bool StringIsNumeric(string value)
     {
       foreach (var c in value)
@@ -65,11 +62,11 @@ namespace MedicalNumber
       newZealandNationalHealthIndexAlphabetIntegerDictionary.Add('Z', 24);
     }
 
-    public bool Validate(string Value)
+    public bool Validate(string Value, PatientIdentifierStyle patientIdentifierStyle)
     {
       IssueList.Clear();
 
-      switch (PatientIdentifierStyle)
+      switch (patientIdentifierStyle)
       {
         case PatientIdentifierStyle.AustralianMedicareNumber:
           
@@ -270,13 +267,12 @@ namespace MedicalNumber
 
           break;
         default:
-          throw new Exception(String.Format("Patient identifier style \"{0}\" is not handled by the validation engine.", PatientIdentifierStyle.ToString()));
+          throw new Exception(String.Format("Patient identifier style \"{0}\" is not handled by the validation engine.", patientIdentifierStyle.ToString()));
       }
 
       return !IssueList.Any();
     }
 
-    public PatientIdentifierStyle PatientIdentifierStyle { get; set; }
     public List<string> IssueList { get; private set; }
   }
 }

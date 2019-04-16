@@ -1,13 +1,18 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace MedicalNumber
 {
   public class PatientIdentifierDefinition
   {
-    public string Name { get; set; }
-    public string MaskFormat { get; set; }
-    public PatientIdentifierStyle Style { get; set; }
+    public PatientIdentifierDefinition(string name, string maskFormat, PatientIdentifierStyle style)
+    {
+      Name = name;
+      MaskFormat = maskFormat;
+      Style = style;
+    }
+    public readonly string Name;
+    public readonly string MaskFormat;
+    public readonly PatientIdentifierStyle Style;
   }
 
   public static class PatientIdentifierDefinitionListBuilder
@@ -16,32 +21,11 @@ namespace MedicalNumber
     {
       var DefinitionList = new List<PatientIdentifierDefinition>
       {
-        new PatientIdentifierDefinition
-        {
-          Name = "Australian Medicare Number",
-          MaskFormat = "9999 99999 9-9",
-          Style = PatientIdentifierStyle.AustralianMedicareNumber
-        },
+        new PatientIdentifierDefinition("Australian Medicare Number", "9999 99999 9-9", PatientIdentifierStyle.AustralianMedicareNumber),
 
-        new PatientIdentifierDefinition
-        {
-          Name = "Australian Department Of Veterans Affairs File Number",
-          MaskFormat = "LAAAAAAAA",
-          Style = PatientIdentifierStyle.AustralianDepartmentOfVeteransAffairsFileNumber
-        },
+        new PatientIdentifierDefinition("Australian Department Of Veterans Affairs File Number", "LAAAAAAAA", PatientIdentifierStyle.AustralianDepartmentOfVeteransAffairsFileNumber),
 
-        //definition = new PatientIdentifierDefinition();
-        //definition.Name = "Western Australian Unit Medical Record Number";
-        //definition.MaskFormat = "L9999999";
-        //definition.Style = PatientIdentifierStyle.WesternAustralianUnitMedicalRecordNumber;
-        //DefinitionList.Add(definition);
-
-        new PatientIdentifierDefinition
-        {
-          Name = "New Zealand National Health Index Number",
-          MaskFormat = "LLL9999",
-          Style = PatientIdentifierStyle.NewZealandNationalHealthIndexNumber
-        }
+        new PatientIdentifierDefinition("New Zealand National Health Index Number", "LLL9999", PatientIdentifierStyle.NewZealandNationalHealthIndexNumber)
       };
       return DefinitionList.ToArray();
     }

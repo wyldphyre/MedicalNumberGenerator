@@ -36,7 +36,7 @@ namespace MedicalNumber
 
     public string GetPatientIdentifierStyleName(PatientIdentifierStyle style)
     {
-      Debug.Assert(nameByStyleDictionary.ContainsKey(style), String.Format("Style \"{0}\" is not a known patient identifier style.", style.ToString()));
+      Debug.Assert(nameByStyleDictionary.ContainsKey(style), $"Style \"{style.ToString()}\" is not a known patient identifier style.");
 
       nameByStyleDictionary.TryGetValue(style, out string styleName);
 
@@ -45,7 +45,7 @@ namespace MedicalNumber
 
     public PatientIdentifierStyle GetPatientIdentifierStyleByName(string name)
     {
-      Debug.Assert(styleByNameDictionary.ContainsKey(name), String.Format("Name \"{0}\" is not a known patient identifier style name.", name));
+      Debug.Assert(styleByNameDictionary.ContainsKey(name), $"Name \"{name}\" is not a known patient identifier style name.");
 
       styleByNameDictionary.TryGetValue(name, out PatientIdentifierStyle style);
 
@@ -54,7 +54,7 @@ namespace MedicalNumber
 
     public string GetMaskFormatByPatientIdentifierStyle(PatientIdentifierStyle style)
     {
-      Debug.Assert(maskFormatByStyleDictionary.ContainsKey(style), String.Format("Style \"{0}\" is not a known patient identifier style.", style.ToString()));
+      Debug.Assert(maskFormatByStyleDictionary.ContainsKey(style), $"Style \"{style.ToString()}\" is not a known patient identifier style.");
 
       maskFormatByStyleDictionary.TryGetValue(style, out string maskFormat);
 
@@ -66,15 +66,7 @@ namespace MedicalNumber
       return PatientIdentifierDefinitionList.FirstOrDefault(Definition => Definition.Style == style);
     }
 
-    public PatientIdentifierDefinition[] PatientIdentifierDefinitionList
-    {
-      get
-      {
-        Debug.Assert(patientIdentifierDefinitionList != null, "definitionList is null. Must be assigned before calling Build.");
-
-        return patientIdentifierDefinitionList;
-      }
-    }
+    public PatientIdentifierDefinition[] PatientIdentifierDefinitionList => patientIdentifierDefinitionList;
   }
 
   public class PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary
