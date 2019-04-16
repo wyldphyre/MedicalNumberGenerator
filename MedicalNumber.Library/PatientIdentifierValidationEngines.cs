@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MedicalNumberGenerator
+namespace MedicalNumber
 {
-  class PatientIdentifierValidationEngine : Object
+  public class PatientIdentifierValidationEngine : Object
   {
     private PatientIdentifierStyle patientIdentifierStyle;
     

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MedicalNumberGenerator
+namespace MedicalNumber
 {
-  class PatientIdentifierValueGenerator
+  public class PatientIdentifierValueGenerator
   {
     public string Generate(PatientIdentifierDefinition definition)
     {

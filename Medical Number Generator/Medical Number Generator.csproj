@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -55,12 +58,6 @@
       <Link>MedicalNumberGeneratorApplicationForm.Designer.cs</Link>
       <DependentUpon>MedicalNumberGeneratorApplicationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MedicareProviderNumberValidators.cs" />
-    <Compile Include="MaskedTextRandomValueGenerators.cs" />
-    <Compile Include="PatientIdentifierDefinitions.cs" />
-    <Compile Include="PatientIdentifierStyles.cs" />
-    <Compile Include="PatientIdentifierValidationEngines.cs" />
-    <Compile Include="PatientIdentifierValueGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="..\MedicalNumberGeneratorApplicationForm.resx">
@@ -88,6 +85,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MedicalNumber.Library\MedicalNumber.Library.csproj">
+      <Project>{c5a043d4-f1f4-42ca-9416-260a72d88ce5}</Project>
+      <Name>MedicalNumber.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

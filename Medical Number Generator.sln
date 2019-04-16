@@ -1,7 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical Number Generator", "Medical Number Generator\Medical Number Generator.csproj", "{307C75A5-2EB6-43E8-9027-14BD1E7D520E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicalNumber.Library", "MedicalNumber.Library\MedicalNumber.Library.csproj", "{C5A043D4-F1F4-42CA-9416-260A72D88CE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,8 +17,15 @@ Global
 		{307C75A5-2EB6-43E8-9027-14BD1E7D520E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{307C75A5-2EB6-43E8-9027-14BD1E7D520E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{307C75A5-2EB6-43E8-9027-14BD1E7D520E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5A043D4-F1F4-42CA-9416-260A72D88CE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A043D4-F1F4-42CA-9416-260A72D88CE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A043D4-F1F4-42CA-9416-260A72D88CE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A043D4-F1F4-42CA-9416-260A72D88CE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {51491A23-C998-418C-8E07-DA7AE622A252}
 	EndGlobalSection
 EndGlobal
