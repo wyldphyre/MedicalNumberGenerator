@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Linq;
 
-namespace MedicalNumber
+namespace MedicalNumber.Library
 {
   public class MaskedTextRandomValueGenerator
   {
@@ -22,9 +22,9 @@ namespace MedicalNumber
 
       var textBuilder = new StringBuilder(string.Empty, maskFormat.Length);
 
-      Random rnd = new Random((int)DateTime.Now.Ticks);
+      var rnd = new Random((int)DateTime.Now.Ticks);
 
-      foreach (char maskCharacter in maskFormat)
+      foreach (var maskCharacter in maskFormat)
       {
         switch (maskCharacter)
         {

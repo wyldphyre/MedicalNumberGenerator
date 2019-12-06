@@ -2,55 +2,57 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MedicalNumber
+namespace MedicalNumber.Library
 {
-  public class MedicareProviderNumberValidator
+  public static class MedicareProviderNumberHelper
   {
-    private readonly char[] practiceLocationCharacters = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'T', 'U', 'V', 'W', 'X', 'Y', };
-    private readonly Dictionary<int, char> practiceLocationCheckDigitValueDictionary = new Dictionary<int, Char>();
+    private static readonly char[] practiceLocationCharacters;
+    private static readonly Dictionary<int, char> practiceLocationCheckDigitValueDictionary;
 
-    public MedicareProviderNumberValidator()
+    static MedicareProviderNumberHelper()
     {
-      Issues = new List<string>();
+      practiceLocationCharacters = new[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'T', 'U', 'V', 'W', 'X', 'Y', };
 
-      practiceLocationCheckDigitValueDictionary.Add(1, 'Y');
-      practiceLocationCheckDigitValueDictionary.Add(2, 'X');
-      practiceLocationCheckDigitValueDictionary.Add(3, 'W');
-      practiceLocationCheckDigitValueDictionary.Add(4, 'T');
-      practiceLocationCheckDigitValueDictionary.Add(5, 'L');
-      practiceLocationCheckDigitValueDictionary.Add(6, 'K');
-      practiceLocationCheckDigitValueDictionary.Add(7, 'J');
-      practiceLocationCheckDigitValueDictionary.Add(8, 'H');
-      practiceLocationCheckDigitValueDictionary.Add(9, 'F');
-      practiceLocationCheckDigitValueDictionary.Add(10, 'B');
-      practiceLocationCheckDigitValueDictionary.Add(11, 'A');
+      practiceLocationCheckDigitValueDictionary = new Dictionary<int, char>
+      {
+        {1, 'Y'},
+        {2, 'X'},
+        {3, 'W'},
+        {4, 'T'},
+        {5, 'L'},
+        {6, 'K'},
+        {7, 'J'},
+        {8, 'H'},
+        {9, 'F'},
+        {10, 'B'},
+        {11, 'A'}
+      };
     }
 
-    public List<string> Issues { get; private set; }
-    public bool Validate(string Value)
+    public static bool Validate(string number, out List<string> issues)
     {
-      System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(Value), "You must provide a Value to validate");
+      System.Diagnostics.Debug.Assert(!string.IsNullOrEmpty(number), "You must provide a number to validate");
 
-      Issues.Clear();
-
+      issues = new List<string>();
+      
       var paddedProviderNumber = string.Empty;
 
-      if (Value.Length < 7)
-        Issues.Add("Provider number must be at least 7 characters");
-      else if (Value.Length > 8)
-        Issues.Add("Provider number can be no more than 8 characters");
-      else if (Value.Length == 7)
-        paddedProviderNumber = '0' + Value;
+      if (number.Length < 7)
+        issues.Add("Provider number must be at least 7 characters");
+      else if (number.Length > 8)
+        issues.Add("Provider number can be no more than 8 characters");
+      else if (number.Length == 7)
+        paddedProviderNumber = '0' + number;
       else
-        paddedProviderNumber = Value;
+        paddedProviderNumber = number;
       
       if (paddedProviderNumber.Length == 8)
       {
         // Check that the 7th character is an allowed practice location character
-        char seventhCharacter = paddedProviderNumber[6];
+        var seventhCharacter = paddedProviderNumber[6];
 
         if (!practiceLocationCharacters.Contains(seventhCharacter))
-          Issues.Add(String.Format(@"Practice location character [{0}]", seventhCharacter));
+          issues.Add($@"Practice location character [{seventhCharacter}]");
       
         var characterValue1 = int.Parse(paddedProviderNumber[0].ToString());
         var characterValue2 = int.Parse(paddedProviderNumber[1].ToString());
@@ -68,13 +70,13 @@ namespace MedicalNumber
              characterValue6 +
              Array.IndexOf(practiceLocationCharacters, seventhCharacter) * 6) % 11;
 
-        practiceLocationCheckDigitValueDictionary.TryGetValue(validationCheckDigitValue + 1, out char validationCheckDigit);
+        practiceLocationCheckDigitValueDictionary.TryGetValue(validationCheckDigitValue + 1, out var validationCheckDigit);
 
         if (validationCheckDigit != paddedProviderNumber[7])
-          Issues.Add("Check digit character is not valid.");
+          issues.Add("Check digit character is not valid.");
       }
 
-      return Issues.Count == 0;
+      return issues.Count == 0;
     }
   }
 }

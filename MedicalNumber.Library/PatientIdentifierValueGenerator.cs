@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MedicalNumber
+namespace MedicalNumber.Library
 {
   public class PatientIdentifierValueGenerator
   {
@@ -11,7 +11,7 @@ namespace MedicalNumber
       switch (definition.Style)
       {
         case PatientIdentifierStyle.AustralianDepartmentOfVeteransAffairsFileNumber:
-          return new VeteransAffairsPatientIdentifierValueGenerator().Generate();
+          return new VeteransAffairsPatientIdentifierGenerator().Generate();
 
         default:
           return new MaskedTextRandomValueGenerator().Generate(definition.MaskFormat);
@@ -19,15 +19,14 @@ namespace MedicalNumber
     }
   }
 
-  public class VeteransAffairsPatientIdentifierValueGenerator
+  public class VeteransAffairsPatientIdentifierGenerator
   {
     private readonly char[] numericCharacters = new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
     private readonly List<string> warCodesList = new List<string>();
-    private readonly PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary veteransAffairsLibrary = new PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary();
 
-    public VeteransAffairsPatientIdentifierValueGenerator()
+    public VeteransAffairsPatientIdentifierGenerator()
     {
-      foreach (var kvp in veteransAffairsLibrary.WarCodeNameDictionary)
+      foreach (var kvp in PatientIdentifierStyleVeteransAffairsFileNumberComponentLibrary.WarCodeNameDictionary)
       {
         warCodesList.Add(kvp.Key);
       }
@@ -44,8 +43,8 @@ namespace MedicalNumber
 
       var rnd = new Random((int)DateTime.Now.Ticks);
 
-      valueBuilder.Append(veteransAffairsLibrary.StateCodeCharacters[rnd.Next(veteransAffairsLibrary.StateCodeCharacters.Length)]);
-      valueBuilder.Append(warCodesList[rnd.Next(veteransAffairsLibrary.WarCodeNameDictionary.Count)]);
+      valueBuilder.Append(PatientIdentifierStyleVeteransAffairsFileNumberComponentLibrary.StateCodeCharacters[rnd.Next(PatientIdentifierStyleVeteransAffairsFileNumberComponentLibrary.StateCodeCharacters.Length)]);
+      valueBuilder.Append(warCodesList[rnd.Next(PatientIdentifierStyleVeteransAffairsFileNumberComponentLibrary.WarCodeNameDictionary.Count)]);
       remainingCharacterCount -= valueBuilder.Length;
 
       for (int i = 1; i <= remainingCharacterCount; i++)

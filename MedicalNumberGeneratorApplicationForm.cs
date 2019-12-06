@@ -17,6 +17,7 @@ namespace MedicalNumberGenerator
 
       patientIdentifierDefinitionList = PatientIdentifierDefinitionListBuilder.Build();
       validator = new MedicareProviderNumberValidator();
+      patientIdentifierDefinitionList = PatientIdentifierDefinitionListBuilder.Definitions;
       helper = new PatientIdentifierStyleHelper(patientIdentifierDefinitionList);
     }
 
@@ -41,30 +42,46 @@ namespace MedicalNumberGenerator
         // raise an error of some kind, or fail in some other fashion.
       }
       else
+      var valueGenerator = new PatientIdentifierValueGenerator();
+      var validationEngine = new PatientIdentifierValidationEngine();
+      var oldCursor = this.Cursor;
+      this.Cursor = Cursors.WaitCursor;
+      try
       {
         var valueGenerator = new PatientIdentifierValueGenerator();
         var validationEngine = new PatientIdentifierValidationEngine();
         var oldCursor = this.Cursor;
         this.Cursor = Cursors.WaitCursor;
         try
+        var valid = false;
+        var value = "";
+        do
         {
           var valid = false;
           var value = "";
           do
           {
             value = valueGenerator.Generate(definition);
+          value = valueGenerator.Generate(definition);
 
             valid = validationEngine.Validate(value, definition.Style);
+          valid = validationEngine.Validate(value, definition.Style);
 
             if (GenerateInvalidCheckBox.Checked)
               valid = !valid;
           }
           while (!valid);
+          if (GenerateInvalidCheckBox.Checked)
+            valid = !valid;
+        } while (!valid);
 
           var generatedIdentifier = value;
+        var generatedIdentifier = value;
 
           if (!GenerateFormattedCheckBox.Checked)
             generatedIdentifier = RemoveFormatting(generatedIdentifier);
+        if (!GenerateFormattedCheckBox.Checked)
+          generatedIdentifier = RemoveFormatting(generatedIdentifier);
 
           GeneratedPatientIdentifierLinkLabel.Text = generatedIdentifier;
         }
@@ -72,6 +89,11 @@ namespace MedicalNumberGenerator
         {
           this.Cursor = oldCursor;
         }
+        GeneratedPatientIdentifierLinkLabel.Text = generatedIdentifier;
+      }
+      finally
+      {
+        this.Cursor = oldCursor;
       }
     }
     private void MedicareProviderNumberGenerateButton_Click(object sender, EventArgs e)
@@ -85,12 +107,12 @@ namespace MedicalNumberGenerator
       try
       {
         var valid = false;
-        var generatedProviderNumber = string.Empty;
+        string generatedProviderNumber;
         do
         {
           generatedProviderNumber = maskedTextRandomValueGenerator.Generate("999999AL");
 
-          valid = validator.Validate(generatedProviderNumber);
+          valid = MedicareProviderNumberHelper.Validate(generatedProviderNumber, out var _);
 
           if (GenerateInvalidCheckBox.Checked)
             valid = !valid;
@@ -142,11 +164,14 @@ namespace MedicalNumberGenerator
       else
       {
         ValidateProviderNumberTextBox.BackColor = validator.Validate(ValidateProviderNumberTextBox.Text) ? Color.LightGreen : Color.Red;
+        ValidateProviderNumberTextBox.BackColor = MedicareProviderNumberHelper.Validate(ValidateProviderNumberTextBox.Text, out var _) ? Color.LightGreen : Color.Red;
       }
     }
     private string RemoveFormatting(string text)
     {
       return text.Replace("-", "").Replace(" ", "");
+      return text?.Replace("-", "").Replace(" ", "");
+    }
     }
   }
 }

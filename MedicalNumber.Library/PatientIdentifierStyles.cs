@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace MedicalNumber
+namespace MedicalNumber.Library
 {
   public enum PatientIdentifierStyle
   {
@@ -15,18 +14,16 @@ namespace MedicalNumber
 
   public class PatientIdentifierStyleHelper
   {
-    private readonly PatientIdentifierDefinition[] patientIdentifierDefinitionList;
-
     // for internal use
     private readonly Dictionary<PatientIdentifierStyle, string> nameByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
     private readonly Dictionary<PatientIdentifierStyle, string> maskFormatByStyleDictionary = new Dictionary<PatientIdentifierStyle, string>();
     private readonly Dictionary<string, PatientIdentifierStyle> styleByNameDictionary = new Dictionary<string, PatientIdentifierStyle>();
 
-    public PatientIdentifierStyleHelper(PatientIdentifierDefinition[] PatientIdentifierDefinitionList)
+    public PatientIdentifierStyleHelper(PatientIdentifierDefinition[] patientIdentifierDefinitionList)
     {
-      patientIdentifierDefinitionList = PatientIdentifierDefinitionList;
+      this.PatientIdentifierDefinitionList = patientIdentifierDefinitionList;
 
-      foreach (var definition in PatientIdentifierDefinitionList)
+      foreach (var definition in patientIdentifierDefinitionList)
       {
         nameByStyleDictionary.Add(definition.Style, definition.Name);
         maskFormatByStyleDictionary.Add(definition.Style, definition.MaskFormat);
@@ -66,74 +63,77 @@ namespace MedicalNumber
       return PatientIdentifierDefinitionList.FirstOrDefault(Definition => Definition.Style == style);
     }
 
-    public PatientIdentifierDefinition[] PatientIdentifierDefinitionList => patientIdentifierDefinitionList;
+    public PatientIdentifierDefinition[] PatientIdentifierDefinitionList { get; }
   }
 
-  public class PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary
+  public static class PatientIdentifierStyleVeteransAffairsFileNumberComponentLibrary
   {
-    public PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary()
+    static PatientIdentifierStyleVeteransAffairsFileNumberComponentLibrary()
     {
-      WarCodeNameDictionary.Add("", "Australian Forces 1914");
-      WarCodeNameDictionary.Add("X", "Australian Forces 1939");
-      WarCodeNameDictionary.Add("KM", "Korea Malaya");
-      WarCodeNameDictionary.Add("SR", "Far East Strategic Reserve");
-      WarCodeNameDictionary.Add("SS", "Special Overseas Act");
-      WarCodeNameDictionary.Add("SM", "Serving Members");
-      WarCodeNameDictionary.Add("SWP", "Seamans War Pension 1939");
-      WarCodeNameDictionary.Add("AGX", "Act of Grace 1939");
-      WarCodeNameDictionary.Add("BW", "Boer War");
-      WarCodeNameDictionary.Add("GW", "Gulf War Australian");
-      WarCodeNameDictionary.Add("CGW", "Gulf War British Commonwealth");
-      WarCodeNameDictionary.Add("P", "British Pension 1914");
-      WarCodeNameDictionary.Add("PX", "British Pension 1939");
-      WarCodeNameDictionary.Add("AD", "British Admiralty");
-      WarCodeNameDictionary.Add("PAM", "British Air Ministry");
-      WarCodeNameDictionary.Add("PCA", "Government and Admin");
-      WarCodeNameDictionary.Add("PCR", "British Service Department CRO");
-      WarCodeNameDictionary.Add("PCV", "British Civilians");
-      WarCodeNameDictionary.Add("PMS", "British Merchant Seamen 1914");
-      WarCodeNameDictionary.Add("PSW", "British Merchant Seamen 1939");
-      WarCodeNameDictionary.Add("PWO", "British War Office");
-      WarCodeNameDictionary.Add("HKX", "Hong Kong 1939");
-      WarCodeNameDictionary.Add("MAL", "Malaysia");
-      WarCodeNameDictionary.Add("N", "New Zealand 1914");
-      WarCodeNameDictionary.Add("NX", "New Zealand 1939");
-      WarCodeNameDictionary.Add("NSW", "New Zealand Merchant Navy");
-      WarCodeNameDictionary.Add("CN", "Canada 1914");
-      WarCodeNameDictionary.Add("CNX", "Canada 1939");
-      WarCodeNameDictionary.Add("IV", "Indigenous Veterans PNG");
-      WarCodeNameDictionary.Add("NF", "Newfoundland");
-      WarCodeNameDictionary.Add("NG", "New Guinea Civilians");
-      WarCodeNameDictionary.Add("RD", "Southern Rhodesia 1914");
-      WarCodeNameDictionary.Add("RDX", "Southern Rhodesia 1939");
-      WarCodeNameDictionary.Add("SA", "South Africa 1914");
-      WarCodeNameDictionary.Add("SAX", "South Africa 1939");
-      WarCodeNameDictionary.Add("A", "Allied Forces");
-      WarCodeNameDictionary.Add("BUR", "Burma");
-      WarCodeNameDictionary.Add("CNK", "Canada Korea");
-      WarCodeNameDictionary.Add("CNS", "Canada Special Forces");
-      WarCodeNameDictionary.Add("FIJ", "Fiji");
-      WarCodeNameDictionary.Add("GHA", "Ghana");
-      WarCodeNameDictionary.Add("HKS", "Hong Kong");
-      WarCodeNameDictionary.Add("IND", "India");
-      WarCodeNameDictionary.Add("KYA", "Kenya");
-      WarCodeNameDictionary.Add("MAU", "Mauritius");
-      WarCodeNameDictionary.Add("MLS", "Malaysia Singapore");
-      WarCodeNameDictionary.Add("MTX", "Malta");
-      WarCodeNameDictionary.Add("MWI", "Malawi");
-      WarCodeNameDictionary.Add("NK", "New Zealand Korea");
-      WarCodeNameDictionary.Add("NGR", "Nigeria");
-      WarCodeNameDictionary.Add("NRD", "Northern Rhodesia");
-      WarCodeNameDictionary.Add("NSS", "New Zealand Special Overseas");
-      WarCodeNameDictionary.Add("PK", "British Korea Malaya");
-      WarCodeNameDictionary.Add("SL", "Sierra Leone");
-      WarCodeNameDictionary.Add("SUD", "Sudan");
-      WarCodeNameDictionary.Add("TZA", "Tanzania");
+      WarCodeNameDictionary = new Dictionary<string, string>
+      {
+        {"", "Australian Forces 1914"},
+        {"X", "Australian Forces 1939"},
+        {"KM", "Korea Malaya"},
+        {"SR", "Far East Strategic Reserve"},
+        {"SS", "Special Overseas Act"},
+        {"SM", "Serving Members"},
+        {"SWP", "Seamans War Pension 1939"},
+        {"AGX", "Act of Grace 1939"},
+        {"BW", "Boer War"},
+        {"GW", "Gulf War Australian"},
+        {"CGW", "Gulf War British Commonwealth"},
+        {"P", "British Pension 1914"},
+        {"PX", "British Pension 1939"},
+        {"AD", "British Admiralty"},
+        {"PAM", "British Air Ministry"},
+        {"PCA", "Government and Admin"},
+        {"PCR", "British Service Department CRO"},
+        {"PCV", "British Civilians"},
+        {"PMS", "British Merchant Seamen 1914"},
+        {"PSW", "British Merchant Seamen 1939"},
+        {"PWO", "British War Office"},
+        {"HKX", "Hong Kong 1939"},
+        {"MAL", "Malaysia"},
+        {"N", "New Zealand 1914"},
+        {"NX", "New Zealand 1939"},
+        {"NSW", "New Zealand Merchant Navy"},
+        {"CN", "Canada 1914"},
+        {"CNX", "Canada 1939"},
+        {"IV", "Indigenous Veterans PNG"},
+        {"NF", "Newfoundland"},
+        {"NG", "New Guinea Civilians"},
+        {"RD", "Southern Rhodesia 1914"},
+        {"RDX", "Southern Rhodesia 1939"},
+        {"SA", "South Africa 1914"},
+        {"SAX", "South Africa 1939"},
+        {"A", "Allied Forces"},
+        {"BUR", "Burma"},
+        {"CNK", "Canada Korea"},
+        {"CNS", "Canada Special Forces"},
+        {"FIJ", "Fiji"},
+        {"GHA", "Ghana"},
+        {"HKS", "Hong Kong"},
+        {"IND", "India"},
+        {"KYA", "Kenya"},
+        {"MAU", "Mauritius"},
+        {"MLS", "Malaysia Singapore"},
+        {"MTX", "Malta"},
+        {"MWI", "Malawi"},
+        {"NK", "New Zealand Korea"},
+        {"NGR", "Nigeria"},
+        {"NRD", "Northern Rhodesia"},
+        {"NSS", "New Zealand Special Overseas"},
+        {"PK", "British Korea Malaya"},
+        {"SL", "Sierra Leone"},
+        {"SUD", "Sudan"},
+        {"TZA", "Tanzania"}
+      };
     }
 
-    public char[] StateCodeCharacters { get; } = new[] { 'N', 'V', 'Q', 'S', 'W', 'T' };
+    public static readonly char[] StateCodeCharacters = new[] { 'N', 'V', 'Q', 'S', 'W', 'T' };
 
-    public Dictionary<string, string> WarCodeNameDictionary { get; } = new Dictionary<string, string>();
+    public static readonly Dictionary<string, string> WarCodeNameDictionary;
   }
 
   //public class PatientIdenitiferStyleNewZealandNationalHealthIndexComponentLibrary

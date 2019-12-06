@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MedicalNumber.Library;
 
 namespace MedicalNumber
 {
@@ -8,7 +9,6 @@ namespace MedicalNumber
   {
     // for internal use
     private readonly Dictionary<char, int> newZealandNationalHealthIndexAlphabetIntegerDictionary = new Dictionary<char, int>();
-    private readonly PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary veteransAffairsLibrary = new PatientIdenitiferStyleVeteransAffairsFileNumberComponentLibrary();
 
     private bool StringIsAlphanumeric(string value) => value.All(C => Char.IsLetterOrDigit(C));
     private bool StringIsNumeric(string value)
@@ -62,7 +62,7 @@ namespace MedicalNumber
       newZealandNationalHealthIndexAlphabetIntegerDictionary.Add('Z', 24);
     }
 
-    public bool Validate(string Value, PatientIdentifierStyle patientIdentifierStyle)
+    public bool Validate(string value, PatientIdentifierStyle patientIdentifierStyle)
     {
       IssueList.Clear();
 
@@ -71,7 +71,7 @@ namespace MedicalNumber
         case PatientIdentifierStyle.AustralianMedicareNumber:
           
           // remove all non numeric characters from the value
-          var localValue = new string(Value.Where(C => Char.IsDigit(C)).ToArray());
+          var localValue = new string(value.Where(char.IsDigit).ToArray());
 
           if ((localValue.Length < 10) || (localValue.Length > 11))
             IssueList.Add("Valid Medicare numbers must contain between 10 and 11 numerals.");
@@ -103,19 +103,19 @@ namespace MedicalNumber
           break;
 
         case PatientIdentifierStyle.AustralianDepartmentOfVeteransAffairsFileNumber:
-          if (Value == "")
+          if (value == "")
             IssueList.Add("Veteran's Affairs numbers cannot be blank.");
           else
           {
-            if (!StringIsAlphanumeric(Value))
+            if (!StringIsAlphanumeric(value))
               IssueList.Add("Veteran's Affairs numbers must be alphanumeric.");
             else
             {
-              if (Value.Length < 4)
+              if (value.Length < 4)
                 IssueList.Add("Veteran's Affairs numbers must be at least 4 characters in length.");
               else
               {
-                var uppercaseValue = Value.ToUpper();
+                var uppercaseValue = value.ToUpper();
                 var veteranState = uppercaseValue[0];
 
                 if (!Char.IsLetter(veteranState))
@@ -147,9 +147,9 @@ namespace MedicalNumber
              
                     if (!StringIsNumeric(veteranNumber))
                       IssueList.Add($"\"{veteranNumber}\" is not a valid number.");
-                    else if (!veteransAffairsLibrary.StateCodeCharacters.Contains(veteranState))
+                    else if (!PatientIdentifierStyleVeteransAffairsFileNumberComponentLibrary.StateCodeCharacters.Contains(veteranState))
                       IssueList.Add($"\"{veteranState}\" is not a valid Veteran's Affairs state code.");
-                    else if (!veteransAffairsLibrary.WarCodeNameDictionary.ContainsKey(veteranWarCode))
+                    else if (!PatientIdentifierStyleVeteransAffairsFileNumberComponentLibrary.WarCodeNameDictionary.ContainsKey(veteranWarCode))
                       IssueList.Add($"\"{veteranWarCode}\" is not a valid Veteran's Affairs war code.");
                     else if (veteranNumber.Length > 6)
                       IssueList.Add("The numeric portion of a Veteran's Affairs number cannot exceed 6 characters.");
@@ -191,30 +191,30 @@ namespace MedicalNumber
 
           break;
         case PatientIdentifierStyle.NewZealandNationalHealthIndexNumber:
-          if (Value.Length != 7)
+          if (value.Length != 7)
             IssueList.Add("Valid New Zealand National Health Index numbers must have a length of 7 characters.");
           else
           {
             for (int i = 0; i < 3; i++)
             {
-              if (!Char.IsUpper(Value[i]) || (Value[i] == 'I') || (Value[i] == 'O'))
-                IssueList.Add(String.Format("The character \"{0}\" in position {1} must be an uppercase letter other than \"I\" or \"O\".", Value[i], i));
+              if (!Char.IsUpper(value[i]) || (value[i] == 'I') || (value[i] == 'O'))
+                IssueList.Add(String.Format("The character \"{0}\" in position {1} must be an uppercase letter other than \"I\" or \"O\".", value[i], i));
             }
 
-            for (int i = 3; i < Value.Length; i++)
+            for (int i = 3; i < value.Length; i++)
             {
-              if (!Char.IsNumber(Value[i]))
-                IssueList.Add(String.Format("The character \"{0}\" in position {1} must be a number in the range 0..9", Value[i], i));
+              if (!Char.IsNumber(value[i]))
+                IssueList.Add(String.Format("The character \"{0}\" in position {1} must be a number in the range 0..9", value[i], i));
             }
 
             if (IssueList.Count == 0)
             {
-              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(Value[0], out int characterValue1);
-              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(Value[1], out int characterValue2);
-              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(Value[2], out int characterValue3);
-              int characterValue4 = int.Parse(Value[3].ToString());
-              int characterValue5 = int.Parse(Value[4].ToString());
-              int characterValue6 = int.Parse(Value[5].ToString());
+              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(value[0], out int characterValue1);
+              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(value[1], out int characterValue2);
+              newZealandNationalHealthIndexAlphabetIntegerDictionary.TryGetValue(value[2], out int characterValue3);
+              int characterValue4 = int.Parse(value[3].ToString());
+              int characterValue5 = int.Parse(value[4].ToString());
+              int characterValue6 = int.Parse(value[5].ToString());
 
               int checkSumKey =
                   (characterValue1 * 7 +
@@ -235,7 +235,7 @@ namespace MedicalNumber
           
                 char checkSumKeyAsChar = checkSumKey.ToString()[0];
 
-                if (checkSumKeyAsChar != Value[Value.Length - 1])
+                if (checkSumKeyAsChar != value[value.Length - 1])
                   IssueList.Add(String.Format("Checksum digit \"{0}\" is incorrect.", checkSumKeyAsChar));
               }
             }

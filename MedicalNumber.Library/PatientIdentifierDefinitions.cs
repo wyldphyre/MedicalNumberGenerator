@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace MedicalNumber
+namespace MedicalNumber.Library
 {
   public class PatientIdentifierDefinition
   {
@@ -17,9 +15,9 @@ namespace MedicalNumber
 
   public static class PatientIdentifierDefinitionListBuilder
   {
-    public static PatientIdentifierDefinition[] Build()
+    static PatientIdentifierDefinitionListBuilder()
     {
-      var DefinitionList = new List<PatientIdentifierDefinition>
+      Definitions = new[]
       {
         new PatientIdentifierDefinition("Australian Medicare Number", "9999 99999 9-9", PatientIdentifierStyle.AustralianMedicareNumber),
 
@@ -27,7 +25,8 @@ namespace MedicalNumber
 
         new PatientIdentifierDefinition("New Zealand National Health Index Number", "LLL9999", PatientIdentifierStyle.NewZealandNationalHealthIndexNumber)
       };
-      return DefinitionList.ToArray();
     }
+
+    public static readonly PatientIdentifierDefinition[] Definitions;
   }
 }
