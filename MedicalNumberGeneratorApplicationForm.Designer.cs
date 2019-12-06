@@ -54,8 +54,8 @@ namespace MedicalNumberGenerator
       // 
       // tabControl1
       // 
-      this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-      | System.Windows.Forms.AnchorStyles.Left)
+      this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+      | System.Windows.Forms.AnchorStyles.Left) 
       | System.Windows.Forms.AnchorStyles.Right)));
       this.tabControl1.Controls.Add(this.MedicareProviderNumberTabPage);
       this.tabControl1.Controls.Add(this.PatientIdentifierTabPage);
@@ -74,7 +74,7 @@ namespace MedicalNumberGenerator
       this.MedicareProviderNumberTabPage.Controls.Add(this.MedicareProviderNumberGenerateButton);
       this.MedicareProviderNumberTabPage.Location = new System.Drawing.Point(4, 22);
       this.MedicareProviderNumberTabPage.Name = "MedicareProviderNumberTabPage";
-      this.MedicareProviderNumberTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.MedicareProviderNumberTabPage.Padding = new System.Windows.Forms.Padding(3);
       this.MedicareProviderNumberTabPage.Size = new System.Drawing.Size(496, 99);
       this.MedicareProviderNumberTabPage.TabIndex = 1;
       this.MedicareProviderNumberTabPage.Text = "Medicare Provider Number";
@@ -139,7 +139,7 @@ namespace MedicalNumberGenerator
       this.PatientIdentifierTabPage.Controls.Add(this.PatientIdentifierStyleComboBox);
       this.PatientIdentifierTabPage.Location = new System.Drawing.Point(4, 22);
       this.PatientIdentifierTabPage.Name = "PatientIdentifierTabPage";
-      this.PatientIdentifierTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.PatientIdentifierTabPage.Padding = new System.Windows.Forms.Padding(3);
       this.PatientIdentifierTabPage.Size = new System.Drawing.Size(496, 99);
       this.PatientIdentifierTabPage.TabIndex = 0;
       this.PatientIdentifierTabPage.Text = "Patient Identifiers";
@@ -206,7 +206,7 @@ namespace MedicalNumberGenerator
       // 
       // PatientIdentifierStyleComboBox
       // 
-      this.PatientIdentifierStyleComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+      this.PatientIdentifierStyleComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
       | System.Windows.Forms.AnchorStyles.Right)));
       this.PatientIdentifierStyleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.PatientIdentifierStyleComboBox.FormattingEnabled = true;
@@ -217,7 +217,7 @@ namespace MedicalNumberGenerator
       // 
       // OptionsGroupBox
       // 
-      this.OptionsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+      this.OptionsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
       | System.Windows.Forms.AnchorStyles.Right)));
       this.OptionsGroupBox.Controls.Add(this.GenerateFormattedCheckBox);
       this.OptionsGroupBox.Controls.Add(this.GenerateInvalidCheckBox);
@@ -258,6 +258,7 @@ namespace MedicalNumberGenerator
       this.Controls.Add(this.tabControl1);
       this.Name = "MedicalNumberGeneratorApplicationForm";
       this.Text = "Medical Number Generator";
+      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MedicalNumberGeneratorApplicationForm_FormClosing);
       this.Load += new System.EventHandler(this.MedicalNumberGeneratorApplicationForm_Load);
       this.tabControl1.ResumeLayout(false);
       this.MedicareProviderNumberTabPage.ResumeLayout(false);

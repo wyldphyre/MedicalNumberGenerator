@@ -2,6 +2,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using MedicalNumber;
+using MedicalNumber.Library;
+using NLog;
 
 namespace MedicalNumberGenerator
 {
@@ -9,14 +11,12 @@ namespace MedicalNumberGenerator
   {
     private readonly PatientIdentifierStyleHelper helper;
     private readonly PatientIdentifierDefinition[] patientIdentifierDefinitionList;
-    private readonly MedicareProviderNumberValidator validator;
+    private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
     public MedicalNumberGeneratorApplicationForm()
     {
       InitializeComponent();
 
-      patientIdentifierDefinitionList = PatientIdentifierDefinitionListBuilder.Build();
-      validator = new MedicareProviderNumberValidator();
       patientIdentifierDefinitionList = PatientIdentifierDefinitionListBuilder.Definitions;
       helper = new PatientIdentifierStyleHelper(patientIdentifierDefinitionList);
     }
@@ -37,58 +37,31 @@ namespace MedicalNumberGenerator
       var style = helper.GetPatientIdentifierStyleByName(PatientIdentifierStyleComboBox.Text);
       var definition = helper.GetPatientIdentifierDefinitionByStyle(style);
 
-      if (definition == null)
-      {
-        // raise an error of some kind, or fail in some other fashion.
-      }
-      else
+      logger.Info(new { Action = "Generate", definition.Style, definition.MaskFormat, GenerateInvalid = GenerateInvalidCheckBox.Checked, GenerateFormatted = GenerateInvalidCheckBox.Checked });
+
       var valueGenerator = new PatientIdentifierValueGenerator();
       var validationEngine = new PatientIdentifierValidationEngine();
       var oldCursor = this.Cursor;
       this.Cursor = Cursors.WaitCursor;
       try
       {
-        var valueGenerator = new PatientIdentifierValueGenerator();
-        var validationEngine = new PatientIdentifierValidationEngine();
-        var oldCursor = this.Cursor;
-        this.Cursor = Cursors.WaitCursor;
-        try
         var valid = false;
         var value = "";
         do
         {
-          var valid = false;
-          var value = "";
-          do
-          {
-            value = valueGenerator.Generate(definition);
           value = valueGenerator.Generate(definition);
 
-            valid = validationEngine.Validate(value, definition.Style);
           valid = validationEngine.Validate(value, definition.Style);
 
-            if (GenerateInvalidCheckBox.Checked)
-              valid = !valid;
-          }
-          while (!valid);
           if (GenerateInvalidCheckBox.Checked)
             valid = !valid;
         } while (!valid);
 
-          var generatedIdentifier = value;
         var generatedIdentifier = value;
 
-          if (!GenerateFormattedCheckBox.Checked)
-            generatedIdentifier = RemoveFormatting(generatedIdentifier);
         if (!GenerateFormattedCheckBox.Checked)
           generatedIdentifier = RemoveFormatting(generatedIdentifier);
 
-          GeneratedPatientIdentifierLinkLabel.Text = generatedIdentifier;
-        }
-        finally
-        {
-          this.Cursor = oldCursor;
-        }
         GeneratedPatientIdentifierLinkLabel.Text = generatedIdentifier;
       }
       finally
@@ -99,6 +72,8 @@ namespace MedicalNumberGenerator
     private void MedicareProviderNumberGenerateButton_Click(object sender, EventArgs e)
     {
       MedicareProviderNumberCopyButton.Enabled = true;
+
+      logger.Info(new {Style = "MedicareProviderNumberCopyButton", GenerateInvalid = GenerateInvalidCheckBox.Checked, GenerateFormatted = GenerateInvalidCheckBox.Checked });
 
       var maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
       var oldCursor = this.Cursor;
@@ -163,15 +138,17 @@ namespace MedicalNumberGenerator
         ValidateProviderNumberTextBox.BackColor = Color.White;
       else
       {
-        ValidateProviderNumberTextBox.BackColor = validator.Validate(ValidateProviderNumberTextBox.Text) ? Color.LightGreen : Color.Red;
         ValidateProviderNumberTextBox.BackColor = MedicareProviderNumberHelper.Validate(ValidateProviderNumberTextBox.Text, out var _) ? Color.LightGreen : Color.Red;
       }
     }
     private string RemoveFormatting(string text)
     {
-      return text.Replace("-", "").Replace(" ", "");
       return text?.Replace("-", "").Replace(" ", "");
     }
+
+    private void MedicalNumberGeneratorApplicationForm_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      NLog.LogManager.Shutdown();
     }
   }
 }
