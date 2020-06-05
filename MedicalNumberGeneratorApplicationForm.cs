@@ -62,6 +62,8 @@ namespace MedicalNumberGenerator
         if (!GenerateFormattedCheckBox.Checked)
           generatedIdentifier = RemoveFormatting(generatedIdentifier);
 
+        logger.Debug(new { GeneratedIdentifier = generatedIdentifier, definition.Style });
+
         GeneratedPatientIdentifierLinkLabel.Text = generatedIdentifier;
       }
       finally
@@ -73,7 +75,7 @@ namespace MedicalNumberGenerator
     {
       MedicareProviderNumberCopyButton.Enabled = true;
 
-      logger.Info(new {Style = "MedicareProviderNumberCopyButton", GenerateInvalid = GenerateInvalidCheckBox.Checked, GenerateFormatted = GenerateInvalidCheckBox.Checked });
+      logger.Info(new { Style = "MedicareProviderNumber", GenerateInvalid = GenerateInvalidCheckBox.Checked, GenerateFormatted = GenerateInvalidCheckBox.Checked });
 
       var maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
       var oldCursor = Cursor;
@@ -96,6 +98,8 @@ namespace MedicalNumberGenerator
 
         if (!GenerateFormattedCheckBox.Checked)
           generatedProviderNumber = RemoveFormatting(generatedProviderNumber);
+
+        logger.Debug(new { GeneratedIdentifier = generatedProviderNumber, Style = "MedicareProviderNumber" });
 
         GeneratedMedicareProviderNumberLinkLabel.Text = generatedProviderNumber;
       }
