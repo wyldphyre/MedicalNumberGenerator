@@ -41,8 +41,8 @@ namespace MedicalNumberGenerator
 
       var valueGenerator = new PatientIdentifierValueGenerator();
       var validationEngine = new PatientIdentifierValidationEngine();
-      var oldCursor = this.Cursor;
-      this.Cursor = Cursors.WaitCursor;
+      var oldCursor = Cursor;
+      Cursor = Cursors.WaitCursor;
       try
       {
         var valid = false;
@@ -66,7 +66,7 @@ namespace MedicalNumberGenerator
       }
       finally
       {
-        this.Cursor = oldCursor;
+        Cursor = oldCursor;
       }
     }
     private void MedicareProviderNumberGenerateButton_Click(object sender, EventArgs e)
@@ -76,9 +76,9 @@ namespace MedicalNumberGenerator
       logger.Info(new {Style = "MedicareProviderNumberCopyButton", GenerateInvalid = GenerateInvalidCheckBox.Checked, GenerateFormatted = GenerateInvalidCheckBox.Checked });
 
       var maskedTextRandomValueGenerator = new MaskedTextRandomValueGenerator();
-      var oldCursor = this.Cursor;
+      var oldCursor = Cursor;
 
-      this.Cursor = Cursors.WaitCursor;
+      Cursor = Cursors.WaitCursor;
       try
       {
         var valid = false;
@@ -101,7 +101,7 @@ namespace MedicalNumberGenerator
       }
       finally
       {
-        this.Cursor = oldCursor;
+        Cursor = oldCursor;
       }
     }
     private void MedicareProviderNumberCopyButton_Click(object sender, EventArgs e)
