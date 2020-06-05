@@ -2,6 +2,8 @@
 
 ## Command Line Usage
 
+**Note: The command line implementation has not been done yet.**
+
 It is possible to call the application via the command line in order to generate numbers. This can be useful if you need a number in a script.
 
 command line parameter info goes here
